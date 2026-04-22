@@ -1,0 +1,624 @@
+/* ── Hide all scrollbars globally ── */
+* {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+*::-webkit-scrollbar {
+    display: none;
+}
+/* @file: style.css */
+/* Focussstody — polished UI, consistent theming, no hacks */
+
+/* ═══════════════════════════════════════════════════
+   CSS Variables
+══════════════════════════════════════════════════════ */
+:root {
+    --accent:          #7c78b8;
+    --accent-dim:      rgba(124, 120, 184, 0.3);
+    --text-primary:    #2a2520;
+    --text-primary-inv:#f5f2ee;
+    --bg-light:        #f0ede8;
+    --bg-focus:        #9490c0;
+    --bg-dark:         #1a1917;
+    --bg-dark-focus:   #0f0e0d;
+    --glass-light:     rgba(255, 255, 255, 0.32);
+    --glass-dark:      rgba(255, 255, 255, 0.04);
+    --transition:      all 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ═══════════════════════════════════════════════════
+   Base
+══════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    font-family: 'Playfair Display', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--bg-light);
+    color: var(--text-primary);
+    transition: var(--transition);
+    -webkit-font-smoothing: antialiased;
+}
+
+body[data-focus-state="active"] {
+    background-color: var(--bg-focus) !important;
+    color: rgba(255,255,255,0.95) !important;
+}
+
+/* All text visible in focus state */
+body[data-focus-state="active"] p,
+body[data-focus-state="active"] span,
+body[data-focus-state="active"] h1,
+body[data-focus-state="active"] h2,
+body[data-focus-state="active"] h3,
+body[data-focus-state="active"] button,
+body[data-focus-state="active"] label,
+body[data-focus-state="active"] div {
+    color: rgba(255,255,255,0.9) !important;
+    -webkit-text-fill-color: rgba(255,255,255,0.9) !important;
+}
+
+/* Keep opacity-based dimming working by boosting base */
+body[data-focus-state="active"] .opacity-40 { opacity: 0.7 !important; }
+body[data-focus-state="active"] .opacity-30 { opacity: 0.6 !important; }
+body[data-focus-state="active"] .opacity-20 { opacity: 0.5 !important; }
+body[data-focus-state="active"] .opacity-60 { opacity: 0.85 !important; }
+
+/* Glass cards in focus state — more transparent so bg color shows */
+body[data-focus-state="active"] .glass-card {
+    background: rgba(255,255,255,0.15) !important;
+    border: 1px solid rgba(255,255,255,0.25) !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.3) !important;
+}
+
+/* Start/pause button in focus */
+body[data-focus-state="active"] #startBtn {
+    background: rgba(255,255,255,0.2) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+}
+
+/* Nav bar in focus */
+body[data-focus-state="active"] #bottomNav {
+    background: rgba(255,255,255,0.15) !important;
+    border-color: rgba(255,255,255,0.25) !important;
+}
+
+/* Subject selector in focus */
+body[data-focus-state="active"] #customSelectBtn {
+    background: rgba(255,255,255,0.15) !important;
+    color: rgba(255,255,255,0.9) !important;
+}
+
+/* Keep red for danger */
+body[data-focus-state="active"] #resetBtn,
+body[data-focus-state="active"] .text-red-400 { color: #fca5a5 !important; -webkit-text-fill-color: #fca5a5 !important; }
+
+html.dark body {
+    background-color: var(--bg-dark) !important;
+    color: #f1f5f9;
+}
+
+html.dark body[data-focus-state="active"] {
+    background-color: var(--bg-dark-focus) !important;
+}
+
+/* ═══════════════════════════════════════════════════
+   Typography
+══════════════════════════════════════════════════════ */
+/* Timer & token display — tabular nums for clean digit rolling */
+#timer,
+#token-display,
+[data-unit] {
+    font-family: 'Times New Roman', Times, serif !important;
+    font-variant-numeric: tabular-nums;
+}
+
+#timer {
+    color: var(--accent);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    transition: color 0.5s ease;
+}
+
+html.dark #timer,
+html.dark #rankTextTop,
+body[data-focus-state="active"] #timer,
+body[data-focus-state="active"] #rankTextTop {
+    color: #ffffff !important;
+}
+
+/* ═══════════════════════════════════════════════════
+   Glassmorphism Cards
+══════════════════════════════════════════════════════ */
+.glass-card {
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    border-radius: 2rem;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        inset 0 -1px 0 rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.7) !important;
+    transition: background 0.5s ease;
+}
+
+html.dark .glass-card {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255,255,255,0.07) !important;
+}
+
+/* ═══════════════════════════════════════════════════
+   Start Button
+══════════════════════════════════════════════════════ */
+#startBtn {
+    border: none !important;
+    outline: none !important;
+    background-color: var(--accent);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
+    box-shadow: 0 8px 24px var(--accent-dim);
+}
+
+#startBtn:hover {
+    box-shadow: 0 12px 32px var(--accent-dim);
+    transform: translateY(-1px);
+}
+
+html.dark #startBtn {
+    background-color: #787878 !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+body[data-focus-state="active"] #startBtn {
+    background-color: rgba(255, 255, 255, 0.12) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: none;
+}
+
+#startBtn:active {
+    transform: scale(0.96) translateY(0);
+    box-shadow: none;
+}
+
+/* ═══════════════════════════════════════════════════
+   SVG Progress Circle
+══════════════════════════════════════════════════════ */
+#progressCircle {
+    filter: drop-shadow(0 0 10px var(--accent-dim));
+    transition:
+        stroke-dashoffset 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+        color 0.5s ease;
+    color: var(--accent);
+}
+
+html.dark #progressCircle {
+    filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.15));
+    color: #ffffff !important;
+}
+
+body[data-focus-state="active"] #progressCircle {
+    color: #ffffff !important;
+    filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.25));
+}
+
+/* ═══════════════════════════════════════════════════
+   Mining / Assets Card
+══════════════════════════════════════════════════════ */
+.mining-card {
+    border-radius: 2rem;
+    background: linear-gradient(135deg, #4f4b84 0%, #3b3861 100%);
+    border-radius: 2rem !important;
+    color: #ffffff;
+    border: none !important;
+    box-shadow:
+        0 25px 50px -12px rgba(59, 56, 97, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle shimmer overlay */
+.mining-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(255,255,255,0.08) 0%,
+        transparent 50%,
+        rgba(0,0,0,0.08) 100%
+    );
+    pointer-events: none;
+}
+
+/* Decorative orb */
+.mining-card::after {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+#token-display {
+    color: #ffffff;
+    font-size: 3rem;
+    letter-spacing: -0.04em;
+    font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════════
+   Activity Log Entries
+══════════════════════════════════════════════════════ */
+.log-entry {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.log-entry:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* ═══════════════════════════════════════════════════
+   Custom Dropdown
+══════════════════════════════════════════════════════ */
+#customOptions {
+    overflow-y: auto;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity    0.3s ease;
+    z-index: 9999;
+    position: absolute;
+    left: 0; right: 0;
+    top: calc(100% + 8px);
+    border-radius: 1rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+
+.option-item {
+    transition: background 0.15s ease, color 0.15s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ═══════════════════════════════════════════════════
+   Scrollbar Annihilation
+══════════════════════════════════════════════════════ */
+#customOptions, #logList, .custom-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+#customOptions::-webkit-scrollbar,
+#logList::-webkit-scrollbar { display: none !important; }
+
+/* ═══════════════════════════════════════════════════
+   Digit Roll Animation
+══════════════════════════════════════════════════════ */
+@keyframes roll {
+    0%   { transform: translateY(8px); opacity: 0; }
+    100% { transform: translateY(0);   opacity: 1; }
+}
+
+.animate-roll {
+    display: inline-block;
+    animation: roll 0.18s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ═══════════════════════════════════════════════════
+   Nav EXP Bar
+══════════════════════════════════════════════════════ */
+nav #expBar {
+    background: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5));
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body[data-focus-state="active"] nav {
+    border-color: rgba(255,255,255,0.15);
+}
+
+/* ═══════════════════════════════════════════════════
+   Misc Polish
+══════════════════════════════════════════════════════ */
+/* Ensure Syne is used everywhere for headings/labels */
+p, span, button, li, h1, h2, h3 {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Subtle fade-in on load */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+main.glass-card {
+    animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+section > article:nth-child(1) { animation: fadeUp 0.6s 0.1s cubic-bezier(0.22, 1, 0.36, 1) both; }
+section > article:nth-child(2) { animation: fadeUp 0.6s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both; }
+section > article:nth-child(3) { animation: fadeUp 0.6s 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* ── Single-page view layout ──────────────────────── */
+body[data-view="app"] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1.5rem;
+}
+
+/* ═══════════════════════════════════════════════════
+   Pro — Theme Swatches
+══════════════════════════════════════════════════════ */
+.theme-swatch {
+    position: relative;
+    border-radius: 1rem;
+    height: 64px;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 0.5rem;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    overflow: hidden;
+}
+
+.theme-swatch--active {
+    border-color: white;
+}
+
+.theme-swatch-label {
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.8);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.theme-swatch-check {
+    position: absolute;
+    top: 6px; right: 8px;
+    font-size: 10px;
+    color: #fff;
+    font-weight: 900;
+}
+
+.theme-swatch-lock {
+    position: absolute;
+    top: 6px; right: 6px;
+    font-size: 10px;
+}
+
+/* ── BMC button pulse ── */
+#bmcBtn {
+    animation: bmcPulse 3s ease-in-out infinite;
+}
+
+@keyframes bmcPulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(255,221,0,0.3); }
+    50%       { box-shadow: 0 4px 32px rgba(255,221,0,0.6); }
+}
+
+/* ── Crypto tabs ── */
+.crypto-tab {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    background: rgba(255,255,255,0.08);
+    border-radius: 0.6rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.45;
+    transition: all 0.2s ease;
+}
+.crypto-tab--active {
+    background: rgba(255,255,255,0.18);
+    opacity: 1;
+}
+
+/* ── Crypto donate button ── */
+#cryptoBtn {
+    transition: background 0.6s cubic-bezier(0.4,0,0.2,1),
+                box-shadow 0.6s cubic-bezier(0.4,0,0.2,1),
+                color 0.6s ease,
+                transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    animation: cryptoPulse 3s ease-in-out infinite;
+}
+
+#cryptoBtn.theme-pop {
+    animation: none;
+    transform: scale(1.12);
+}
+
+@keyframes cryptoPulse {
+    0%,100% { box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+    50%      { box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+}
+
+/* Theme-specific donate button colors */
+#cryptoBtn[data-theme="default"]  { background: linear-gradient(135deg,#f7931a,#627eea) !important; color:#fff !important; }
+#cryptoBtn[data-theme="midnight"] { background: linear-gradient(135deg,#1e3a5f,#60a5fa) !important; color:#fff !important; }
+#cryptoBtn[data-theme="forest"]   { background: linear-gradient(135deg,#065f46,#4ade80) !important; color:#fff !important; }
+#cryptoBtn[data-theme="sunset"]   { background: linear-gradient(135deg,#c2410c,#f97316) !important; color:#fff !important; }
+#cryptoBtn[data-theme="ocean"]    { background: linear-gradient(135deg,#0e7490,#22d3ee) !important; color:#fff !important; }
+#cryptoBtn[data-theme="mono"]     { background: linear-gradient(135deg,#404040,#a3a3a3) !important; color:#fff !important; }
+#cryptoBtn[data-theme="cherry"]   { background: linear-gradient(135deg,#9f1239,#fb7185) !important; color:#fff !important; }
+#cryptoBtn[data-theme="galaxy"]   { background: linear-gradient(135deg,#1e1b4b,#a78bfa) !important; color:#fff !important; }
+#cryptoBtn[data-theme="gold"]     { background: linear-gradient(135deg,#78350f,#fbbf24) !important; color:#fff !important; }
+
+/* No glow — clean shadow only */
+#cryptoBtn { box-shadow: 0 4px 16px rgba(0,0,0,0.2) !important; }
+html.dark #cryptoBtn { filter: brightness(0.85); }
+
+/* ═══════════════════════════════════════════════════
+   $STUDY Store
+══════════════════════════════════════════════════════ */
+.store-tab {
+    flex: 1;
+    padding: 0.5rem 0.25rem;
+    border: none;
+    background: rgba(255,255,255,0.08);
+    border-radius: 0.6rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.4;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+.store-tab--active {
+    background: rgba(255,255,255,0.18);
+    opacity: 1;
+}
+
+.store-item {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.9rem;
+    background: rgba(255,255,255,0.05);
+    transition: background 0.2s ease;
+}
+.store-item:hover { background: rgba(255,255,255,0.09); }
+
+.store-item-preview {
+    width: 44px;
+    height: 44px;
+    border-radius: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    background: rgba(255,255,255,0.08);
+}
+
+.store-item-info { min-width: 0; }
+.store-item-name { font-size: 11px; font-weight: 800; margin-bottom: 0.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.store-item-desc { font-size: 9px; opacity: 0.4; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.store-item-btn {
+    padding: 0.35rem 0.65rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+}
+.store-btn-buy    { background: var(--accent); color: #fff; }
+.store-btn-buy:hover { filter: brightness(1.15); transform: scale(1.04); }
+.store-btn-owned  { background: rgba(255,255,255,0.1); color: inherit; opacity: 0.7; }
+.store-btn-owned:hover { background: rgba(255,255,255,0.18); opacity: 1; }
+.store-btn-active { background: rgba(74,222,128,0.15); color: #4ade80; border: 1px solid rgba(74,222,128,0.3); }
+.store-btn-locked { background: rgba(255,255,255,0.04); color: inherit; opacity: 0.25; cursor: not-allowed; }
+
+/* ── Header menu dropdown ── */
+html.dark #menuDropdown {
+    background: rgba(30,31,36,0.98) !important;
+    border-color: rgba(255,255,255,0.08) !important;
+}
+html.dark .menu-item,
+html.dark #menuDropdown button {
+    color: #f1f5f9 !important;
+    border-color: rgba(255,255,255,0.06) !important;
+}
+html.dark #menuDropdown button:hover,
+html.dark .menu-item:hover {
+    background: rgba(255,255,255,0.06);
+}
+#menuDropdown button:hover,
+.menu-item:hover {
+    background: rgba(0,0,0,0.04);
+}
+
+/* ── Waterfall dropdown animation ── */
+#menuDropdown {
+    transform-origin: top right;
+    transition: none;
+}
+
+#menuDropdown.open {
+    display: block !important;
+}
+
+#menuDropdown .menu-item,
+#menuDropdown button {
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.22,1,0.36,1), background 0.15s ease;
+}
+
+#menuDropdown.open .menu-item,
+#menuDropdown.open button {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger each item */
+#menuDropdown.open .menu-item:nth-child(1),
+#menuDropdown.open button:nth-child(1) { transition-delay: 0.03s; }
+#menuDropdown.open .menu-item:nth-child(2),
+#menuDropdown.open button:nth-child(2) { transition-delay: 0.07s; }
+#menuDropdown.open .menu-item:nth-child(3),
+#menuDropdown.open button:nth-child(3) { transition-delay: 0.11s; }
+#menuDropdown.open .menu-item:nth-child(4),
+#menuDropdown.open button:nth-child(4) { transition-delay: 0.15s; }
+#menuDropdown.open .menu-item:nth-child(5),
+#menuDropdown.open button:nth-child(5) { transition-delay: 0.19s; }
+#menuDropdown.open .menu-item:nth-child(6),
+#menuDropdown.open button:nth-child(6) { transition-delay: 0.23s; }
+
+/* ── Interactive Animations (safe subset only) ── */
+
+/* ── Modals always consistent regardless of focus state ── */
+body[data-focus-state="active"] [class*="Modal"],
+body[data-focus-state="inactive"] [class*="Modal"] {
+    color: var(--text-primary);
+}
+[id$="Modal"] .glass-card {
+    background: rgba(255,255,255,0.75) !important;
+    backdrop-filter: blur(32px) !important;
+    -webkit-backdrop-filter: blur(32px) !important;
+}
+html.dark [id$="Modal"] .glass-card {
+    background: rgba(30,28,40,0.85) !important;
+}
+/* ── Dropdown bg var ── */
+#customOptions {
+    background: var(--dropdown-bg, rgba(255,255,255,0.92));
+}
+html.dark #customOptions {
+    --dropdown-bg: rgba(30,28,50,0.97);
+}

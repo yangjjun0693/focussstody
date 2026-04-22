@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focussstody · Friends</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: #d0cbe5;
+            color: #282456;
+            transition: background 0.4s, color 0.4s;
+        }
+        html.dark body {
+            background: #1a1b1e;
+            color: #f1f5f9;
+        }
+
+        .page-shell {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 8rem;
+        }
+
+        .eyebrow {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            opacity: 0.4;
+        }
+
+        .page-title {
+            font-size: 1.75rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+        }
+
+        .back-link {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.35;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: inherit;
+        }
+
+        .section-label {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.4;
+            margin-bottom: 0.75rem;
+        }
+
+        .empty-state {
+            opacity: 0.3;
+            font-size: 11px;
+            font-weight: 700;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .meta-text {
+            font-size: 9px;
+            opacity: 0.4;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-pill {
+            border-radius: 9999px;
+            padding: 0.1rem 0.35rem;
+            font-size: 8px;
+        }
+
+        .glass {
+            background: rgba(255,255,255,0.48);
+            backdrop-filter: blur(32px) saturate(180%);
+            -webkit-backdrop-filter: blur(32px) saturate(180%);
+            border: 1px solid rgba(255,255,255,0.75);
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 32px rgba(100,96,180,0.10), 0 2px 8px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.85);
+            position: relative;
+            overflow: hidden;
+        }
+        .glass::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.95) 40%, rgba(255,255,255,0.65) 70%, transparent);
+            pointer-events: none; border-radius: 1.5rem 1.5rem 0 0;
+        }
+        html.dark .glass {
+            background: rgba(255,255,255,0.055);
+            backdrop-filter: blur(32px) saturate(140%);
+            -webkit-backdrop-filter: blur(32px) saturate(140%);
+            border-color: rgba(255,255,255,0.10);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.07);
+        }
+        html.dark .glass::before {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12) 40%, rgba(255,255,255,0.06) 70%, transparent);
+        }
+
+        .friend-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(255,255,255,0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.42);
+            border-radius: 1rem;
+            padding: 0.9rem 1rem;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.65);
+            transition: background 0.15s, box-shadow 0.15s;
+            animation: fadeUp 0.4s cubic-bezier(0.22,1,0.36,1) both;
+        }
+        .friend-row:hover {
+            background: rgba(255,255,255,0.40);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 4px 12px rgba(100,96,180,0.08);
+        }
+        html.dark .friend-row { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.07); box-shadow: none; }
+        html.dark .friend-row:hover { background: rgba(255,255,255,0.08); }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 900;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .pill-btn {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.4rem 0.9rem;
+            border-radius: 9999px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .pill-btn.add    { background: var(--accent, #6964c6); color: #fff; }
+        .pill-btn.accept { background: #4ade80; color: #000; }
+        .pill-btn.decline { background: rgba(255,255,255,0.1); color: inherit; opacity: 0.5; }
+        .pill-btn.remove  { background: rgba(239,68,68,0.15); color: #ef4444; }
+        .pill-btn:hover   { transform: scale(1.05); }
+
+        input.search-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 0.9rem;
+            border: 1.5px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        html.dark input.search-input { background: rgba(255,255,255,0.06); }
+        input.search-input:focus { border-color: var(--accent, #6964c6); }
+        input.search-input::placeholder { opacity: 0.3; }
+
+        .tab-btn {
+            flex: 1;
+            padding: 0.6rem;
+            border: none;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 0.6rem;
+            transition: all 0.2s;
+            opacity: 0.4;
+            color: inherit;
+        }
+        .tab-btn.active {
+            background: rgba(255,255,255,0.15);
+            opacity: 1;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .gap-2 {
+            gap: 0.5rem;
+        }
+        
+        .mt-3 {
+            margin-top: 0.75rem;
+        }
+        
+        .space-y-2 > * + * {
+            margin-top: 0.5rem;
+        }
+        
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+        
+        .mb-8 {
+            margin-bottom: 2rem;
+        }
+        
+        .p-1 {
+            padding: 0.25rem;
+        }
+        
+        .p-4 {
+            padding: 1rem;
+        }
+        
+        .ml-1 {
+            margin-left: 0.25rem;
+        }
+        
+        .items-center {
+            align-items: center;
+        }
+        
+        .justify-between {
+            justify-content: space-between;
+        }
+        
+        .whitespace-nowrap {
+            white-space: nowrap;
+        }
+        
+        .min-w-0 {
+            min-width: 0;
+        }
+        
+        .flex-shrink-0 {
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="page-shell">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <p class="eyebrow">Focussstody</p>
+            <h1 class="page-title">Friends</h1>
+        </div>
+        <button onclick="window.location.href='./app.html'"
+            class="back-link">
+            ← Back
+        </button>
+    </div>
+
+    <!-- Search -->
+    <div class="glass p-4 mb-4">
+        <p class="section-label">Add Friend</p>
+        <div class="flex gap-2">
+            <input id="searchInput" class="search-input" type="text" placeholder="Search by username..." spellcheck="false"/>
+            <button id="searchBtn" class="pill-btn add" style="white-space:nowrap;">Search</button>
+        </div>
+        <div id="searchResults" class="mt-3 space-y-2"></div>
+    </div>
+
+    <!-- Tabs -->
+    <div id="friendTabTrack" class="glass flex gap-1 p-1 mb-4" style="border-radius:1rem;">
+        <button class="tab-btn active" id="tabFriends">👥 Friends</button>
+        <button class="tab-btn" id="tabRequests">📬 Requests <span id="reqBadge" class="hidden ml-1 badge-pill" style="background:var(--accent,#6964c6);color:#fff;"></span></button>
+    </div>
+
+    <!-- Friends list -->
+    <div class="glass p-4" id="friendsPanel">
+        <div id="friendsList"><p class="empty-state">No friends yet — search to add some!</p></div>
+    </div>
+
+    <!-- Requests panel -->
+    <div class="glass p-4 hidden" id="requestsPanel">
+        <div id="requestsList"><p class="empty-state">No pending requests</p></div>
+    </div>
+
+</div>
+
+<script type="module">
+// Wrap everything in an async IIFE to ensure auth is complete before any operations
+(async () => {
+    try {
+        // Import authcheck module
+        const { requireAuth } = await import('./js/authcheck.js');
+        const { SlidingTabs } = await import('./js/sliding-tabs.js');
+        
+        // Wait for auth to complete
+        const auth = await requireAuth();
+        if (!auth) {
+            console.error('Authentication failed');
+            window.location.href = './login.html';
+            return;
+        }
+        
+        const { supabase, userId, username: myUsername } = auth;
+        
+        // Check if we have valid userId
+        if (!userId) {
+            console.error('No userId from auth');
+            return;
+        }
+        
+        // Theme setup
+        const isDark = localStorage.getItem('darkMode') === 'true';
+        const themeKey = auth.studyRow?.active_theme || localStorage.getItem('fv_theme') || 'default';
+        const ACCENTS = { default:'#6964c6',midnight:'#60a5fa',forest:'#4ade80',sunset:'#f97316',ocean:'#22d3ee',mono:'#a3a3a3',cherry:'#fb7185',galaxy:'#a78bfa',gold:'#fbbf24' };
+        document.documentElement.classList.toggle('dark', isDark);
+        document.documentElement.style.setProperty('--accent', ACCENTS[themeKey] || '#6964c6');
+
+        // ── Helpers ─────────────────────────────────────────────────────
+        function fmtTime(sec) {
+            const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60);
+            return h > 0 ? `${h}h ${m}m` : `${m}m`;
+        }
+        
+        function getRank(exp) {
+            if (exp < 3600)  return 'Apprentice';
+            if (exp < 10800) return 'Scholar';
+            if (exp < 36000) return 'Analyst';
+            if (exp < 86400) return 'Researcher';
+            return 'Grand Master';
+        }
+        
+        function avatar(username, color) {
+            if (!username || username.length === 0) username = '?';
+            return `<div class="avatar" style="background:${color || ACCENTS[themeKey] || '#6964c6'}">${username[0].toUpperCase()}</div>`;
+        }
+
+        // ── Load friends & requests ──────────────────────────────────────
+        async function loadFriends() {
+            try {
+                console.log('Loading friends for userId:', userId);
+                
+                const { data, error } = await supabase
+                    .from('friendships')
+                    .select('id, sender_id, receiver_id, status')
+                    .or(`sender_id.eq.${userId},receiver_id.eq.${userId}`)
+                    .eq('status', 'accepted');
+
+                if (error) {
+                    console.error('Error loading friendships:', error);
+                    document.getElementById('friendsList').innerHTML = '<p class="empty-state">Error loading friends</p>';
+                    return;
+                }
+
+                if (!data || data.length === 0) {
+                    document.getElementById('friendsList').innerHTML = '<p class="empty-state">No friends yet!</p>';
+                    return;
+                }
+
+                // Get friend user IDs
+                const friendIds = data.map(f => f.sender_id === userId ? f.receiver_id : f.sender_id);
+                
+                if (friendIds.length === 0) {
+                    document.getElementById('friendsList').innerHTML = '<p class="empty-state">No friends yet!</p>';
+                    return;
+                }
+
+                console.log('Friend IDs:', friendIds);
+
+                // Get their profiles and study data
+                const { data: profiles, error: profilesError } = await supabase
+                    .from('profiles')
+                    .select('id, username')
+                    .in('id', friendIds);
+                    
+                if (profilesError) {
+                    console.error('Error loading profiles:', profilesError);
+                    document.getElementById('friendsList').innerHTML = '<p class="empty-state">Error loading profiles</p>';
+                    return;
+                }
+                
+                const { data: studyRows, error: studyError } = await supabase
+                    .from('study_data')
+                    .select('user_id, total_exp, streak')
+                    .in('user_id', friendIds);
+                    
+                if (studyError) {
+                    console.error('Error loading study data:', studyError);
+                }
+
+                const colors = ['#6964c6','#4ade80','#f97316','#22d3ee','#fb7185','#a78bfa'];
+
+                if (!profiles || profiles.length === 0) {
+                    document.getElementById('friendsList').innerHTML = '<p class="empty-state">No friends found</p>';
+                    return;
+                }
+
+                document.getElementById('friendsList').innerHTML = profiles.map((p, i) => {
+                    const sd = studyRows?.find(r => r.user_id === p.id) || { total_exp: 0, streak: 0 };
+                    const friendship = data.find(f => f.sender_id === p.id || f.receiver_id === p.id);
+                    const fid = friendship?.id;
+                    return `<div class="friend-row" style="animation-delay:${i*0.05}s">
+                        ${avatar(p.username, colors[i % colors.length])}
+                        <div style="flex:1;min-width:0;">
+                            <p style="font-size:12px;font-weight:800;">${escapeHtml(p.username)}</p>
+                            <p style="font-size:9px;opacity:0.4;font-weight:700;text-transform:uppercase;">${getRank(sd.total_exp || 0)} · ${fmtTime(sd.total_exp || 0)} · 🔥${sd.streak || 0}</p>
+                        </div>
+                        <button class="pill-btn remove" onclick="window.removeFriend('${fid}')">Remove</button>
+                    </div>`;
+                }).join('');
+                
+            } catch (err) {
+                console.error('Unexpected error in loadFriends:', err);
+                document.getElementById('friendsList').innerHTML = '<p class="empty-state">Error loading friends</p>';
+            }
+        }
+
+        async function loadRequests() {
+            try {
+                const { data: requests, error } = await supabase
+                    .from('friendships')
+                    .select('id, sender_id, status')
+                    .eq('receiver_id', userId)
+                    .eq('status', 'pending');
+
+                if (error) {
+                    console.error('Error loading requests:', error);
+                    return;
+                }
+
+                // Fetch sender usernames separately
+                const senderIds = requests?.map(r => r.sender_id) || [];
+                let senderMap = {};
+                
+                if (senderIds.length > 0) {
+                    const { data: senderProfiles, error: profilesError } = await supabase
+                        .from('profiles')
+                        .select('id, username')
+                        .in('id', senderIds);
+                        
+                    if (profilesError) {
+                        console.error('Error loading sender profiles:', profilesError);
+                    } else {
+                        senderProfiles?.forEach(p => { senderMap[p.id] = p.username; });
+                    }
+                }
+                
+                const data = requests?.map(r => ({ 
+                    ...r, 
+                    sender_username: senderMap[r.sender_id] || 'Unknown' 
+                }));
+
+                const badge = document.getElementById('reqBadge');
+                if (data?.length && data.length > 0) {
+                    badge.textContent = data.length;
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+
+                document.getElementById('requestsList').innerHTML = data?.length && data.length > 0
+                    ? data.map((r, i) => `<div class="friend-row" style="animation-delay:${i*0.05}s">
+                        ${avatar(r.sender_username, '#6964c6')}
+                        <div style="flex:1;">
+                            <p style="font-size:12px;font-weight:800;">${escapeHtml(r.sender_username)}</p>
+                            <p class="meta-text" style="text-transform:none;">Wants to be friends</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="pill-btn accept" onclick="window.respond('${r.id}','accepted')">Accept</button>
+                            <button class="pill-btn decline" onclick="window.respond('${r.id}','declined')">✕</button>
+                        </div>
+                    </div>`).join('')
+                    : '<p style="opacity:0.3;font-size:11px;font-weight:700;text-align:center;padding:1rem;">No pending requests</p>';
+                    
+            } catch (err) {
+                console.error('Unexpected error in loadRequests:', err);
+            }
+        }
+
+        // Helper to escape HTML
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        // ── Actions ──────────────────────────────────────────────────────
+        window.removeFriend = async (friendshipId) => {
+            if (!friendshipId) return;
+            await supabase.from('friendships').delete().eq('id', friendshipId);
+            await loadFriends();
+        };
+
+        window.respond = async (friendshipId, status) => {
+            if (!friendshipId) return;
+            await supabase.from('friendships').update({ status }).eq('id', friendshipId);
+            await loadRequests();
+            if (status === 'accepted') await loadFriends();
+        };
+
+        window.sendRequest = async (receiverId) => {
+            if (!receiverId) return;
+            const { error } = await supabase.from('friendships').insert({ 
+                sender_id: userId, 
+                receiver_id: receiverId,
+                status: 'pending'
+            });
+            if (error) { 
+                if (error.code === '23505') {
+                    alert('Friend request already sent or already friends!');
+                } else {
+                    alert('Error sending request: ' + error.message);
+                }
+                return; 
+            }
+            document.getElementById('searchResults').innerHTML = '<p style="font-size:11px;font-weight:700;opacity:0.5;padding:0.5rem;">Request sent! ✓</p>';
+            setTimeout(() => {
+                document.getElementById('searchResults').innerHTML = '';
+            }, 2000);
+        };
+
+        // ── Search ───────────────────────────────────────────────────────
+        async function search() {
+            const q = document.getElementById('searchInput').value.trim().toLowerCase();
+            if (!q || q.length < 2) {
+                document.getElementById('searchResults').innerHTML = '<p class="empty-state" style="font-size:11px;opacity:0.4;padding:0.5rem;">Type at least 2 characters</p>';
+                return;
+            }
+
+            const { data, error } = await supabase
+                .from('profiles')
+                .select('id, username')
+                .ilike('username', `%${q}%`)
+                .neq('id', userId)
+                .limit(5);
+
+            if (error) {
+                console.error('Search error:', error);
+                document.getElementById('searchResults').innerHTML = '<p class="empty-state" style="font-size:11px;opacity:0.4;padding:0.5rem;">Search error</p>';
+                return;
+            }
+
+            const resultsEl = document.getElementById('searchResults');
+            if (!data || data.length === 0) {
+                resultsEl.innerHTML = '<p class="empty-state" style="font-size:11px;opacity:0.4;padding:0.5rem;">No users found</p>';
+                return;
+            }
+
+            resultsEl.innerHTML = data.map(u => `
+                <div class="friend-row">
+                    ${avatar(u.username, '#6964c6')}
+                    <div style="flex:1;"><p style="font-size:12px;font-weight:800;">${escapeHtml(u.username)}</p></div>
+                    <button class="pill-btn add" onclick="window.sendRequest('${u.id}')">+ Add</button>
+                </div>`).join('');
+        }
+
+        // Attach event listeners
+        document.getElementById('searchBtn').addEventListener('click', search);
+        document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') search(); });
+
+        // ── Tabs ─────────────────────────────────────────────────────────
+        const tabContainer = document.getElementById('friendTabTrack');
+        if (tabContainer && SlidingTabs) {
+            new SlidingTabs(tabContainer, (i) => {
+                const isFriends = i === 0;
+                document.getElementById('friendsPanel').classList.toggle('hidden', !isFriends);
+                document.getElementById('requestsPanel').classList.toggle('hidden', isFriends);
+            });
+        }
+
+        // ── Initial Load ─────────────────────────────────────────────────
+        console.log('Initializing friends page for user:', userId);
+        await loadFriends();
+        await loadRequests();
+        
+    } catch (error) {
+        console.error('Fatal error initializing friends page:', error);
+        // Show error message to user
+        const container = document.getElementById('friendsList');
+        if (container) {
+            container.innerHTML = '<p class="empty-state" style="color: red;">Error loading page. Please refresh.</p>';
+        }
+    }
+})();
+</script>
+</body>
+</html>
