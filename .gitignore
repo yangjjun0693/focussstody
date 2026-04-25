@@ -8,3 +8,10 @@ node_modules/
 focussstody/.vscode/c_cpp_properties.js
 focussstody/.vscode/launch.json
 focussstody/.vscode/settings.json
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
