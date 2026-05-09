@@ -131,20 +131,19 @@ class AppController {
 
         this.boot();
 
-document.addEventListener('visibilitychange', async () => {
-    if (!document.hidden) {
-        // Reload study data to get latest purchases
-        const newStudyRow = await getStudyData(this.userId);
-        if (newStudyRow) {
-            this.dbRow = newStudyRow;
-            this.timer.loadFromDB(newStudyRow);
-            this.buildThemeGrid();
-            this.updateLogs();
-            this.updateChart();
-        }
+        // Stop presence when user leaves the page
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && this.timer.isRunning) {
+                this.room?.stopStudying();
+            } else if (!document.hidden && this.timer.isRunning) {
+                const subject = this.DOM.subjectSelect?.value || 'STUDY';
+                this.room?.startStudying(subject);
+            }
+        });
+        window.addEventListener('beforeunload', () => {
+            this.room?.stopStudying();
+        });
     }
-});
-}
 
     /* ── Boot ────────────────────────────────────────── */
     async boot() {
@@ -204,22 +203,6 @@ document.addEventListener('visibilitychange', async () => {
         this.pro.isPro = profile?.is_pro || false;
         await this.enterApp(profile?.username || 'User');
     }
-
-    async refreshUserData() {
-    if (!this.userId) return;
-    const newStudyRow = await getStudyData(this.userId);
-    if (newStudyRow) {
-        this.dbRow = newStudyRow;
-        this.timer.loadFromDB(newStudyRow);
-        this.currentTokens = (this.timer.data.total_exp || 0) * 0.016;
-        if (this.DOM.tokenDisplay) {
-            this.DOM.tokenDisplay.textContent = this.currentTokens.toFixed(3).padStart(7, '0');
-        }
-        this.buildThemeGrid();
-        this.updateLogs();
-        this.updateChart();
-    }
-}
 
     /* ── View: App ───────────────────────────────────── */
     async enterApp(username) {
@@ -348,7 +331,7 @@ document.addEventListener('visibilitychange', async () => {
         this.buildSubjectList();
 
         // Restore Pro theme & show Pro UI if unlocked
-        this.pro.restoreTheme(this.dbRow?.store_items, this.dbRow);
+        this.pro.restoreTheme();
         if (this.DOM.cryptoBtn) this.DOM.cryptoBtn.dataset.theme = this.pro.themeKey || 'default';
         this.updateProUI();
 
@@ -359,13 +342,10 @@ document.addEventListener('visibilitychange', async () => {
         this.initAppHandlers();
         this.initChart();
 
-        // Update data when returning to app
-// Replace the existing visibilitychange listener with:
-document.addEventListener('visibilitychange', async () => {
-    if (!document.hidden) {
-        await this.refreshUserData();
-    }
-});
+        // Rebuild theme grid when returning from store.html
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) this.buildThemeGrid();
+        });
         this.updateLogs();
 
         const stats = this.timer.getStats();
@@ -982,62 +962,72 @@ document.addEventListener('visibilitychange', async () => {
             if (this.DOM.exportBtn) this.DOM.exportBtn.classList.remove('hidden');
         }
     }
-buildThemeGrid() {
-    if (!this.DOM.themeGrid) return;
 
-    // Get owned items from Supabase
-    const ownedItems = this.dbRow?.store_items || [];
-    
-    const gradients = {
-        default: '#4f4b84,#3b3861', midnight: '#1e3a5f,#60a5fa', forest: '#065f46,#4ade80',
-        sunset: '#c2410c,#f97316', ocean: '#0e7490,#22d3ee', mono: '#404040,#a3a3a3',
-        cherry: '#9f1239,#fb7185', galaxy: '#1e1b4b,#a78bfa', gold: '#78350f,#fbbf24',
-    };
+    buildThemeGrid() {
+        if (!this.DOM.themeGrid) return;
 
-    // Show ALL themes, but mark locked ones differently
-    const allThemes = Object.entries(THEMES);
-    const activeKey = localStorage.getItem('fv_theme') || 'default';
+        const storeRaw   = localStorage.getItem(`fv_store:${this.currentUser}`);
+        const storeData  = storeRaw ? JSON.parse(storeRaw) : {};
+        const ownedItems = storeData.items || [];
 
-    this.DOM.themeGrid.innerHTML = allThemes.map(([key, theme]) => {
-        const isActive = key === activeKey;
-        const isOwned = ownedItems.includes(key);
-        const isFree = theme.free && this.pro.isPro;
-        const isAvailable = key === 'default' || isOwned || isFree;
-        
-        return `<button data-theme="${key}"
-            class="theme-swatch ${isActive ? 'theme-swatch--active' : ''} ${!isAvailable ? 'opacity-40' : ''} cursor-pointer hover:scale-105"
-            style="background:linear-gradient(135deg,${gradients[key] || '#333,#111'})"
-            title="${theme.name}${!isAvailable ? ' (Locked - Purchase in Store)' : ''}">
-            <span class="theme-swatch-label">${theme.name}</span>
-            ${isActive ? '<span class="theme-swatch-check">✓</span>' : ''}
-            ${!isAvailable ? '<span class="theme-swatch-lock">🔒</span>' : ''}
-        </button>`;
-    }).join('');
+        const gradients = {
+            default:  '#4f4b84,#3b3861',
+            midnight: '#1e3a5f,#60a5fa',
+            forest:   '#065f46,#4ade80',
+            sunset:   '#c2410c,#f97316',
+            ocean:    '#0e7490,#22d3ee',
+            mono:     '#404040,#a3a3a3',
+            cherry:   '#9f1239,#fb7185',
+            galaxy:   '#1e1b4b,#a78bfa',
+            gold:     '#78350f,#fbbf24',
+        };
 
-    this.DOM.themeGrid.querySelectorAll('[data-theme]').forEach(btn => {
-        btn.addEventListener('click', async () => {
-            const themeKey = btn.dataset.theme;
-            const isOwned = ownedItems.includes(themeKey);
-            const isFree = THEMES[themeKey]?.free && this.pro.isPro;
-            const isAvailable = themeKey === 'default' || isOwned || isFree;
-            
-            if (!isAvailable) {
-                this.showToast('Purchase this theme in the Store first!', '#f87171');
-                return;
-            }
-            
-            const success = this.pro.applyTheme(themeKey, ownedItems);
-            if (success) {
-                this.buildThemeGrid();
-                this.popDonateBtn(themeKey);
-                if (this.userId) {
-                    await saveStudyData(this.userId, { active_theme: themeKey });
-                }
-                this.showToast(`${THEMES[themeKey]?.name} theme applied! ✓`, '#4ade80');
-            }
+        const visible = Object.entries(THEMES).filter(([key, theme]) => {
+            if (key === 'default') return true;
+            if (this.pro.isPro && theme.free) return true;
+            if (ownedItems.includes(key)) return true;
+            return false;
         });
-    });
-}
+
+        const activeKey = localStorage.getItem('fv_theme') || 'default';
+
+        this.DOM.themeGrid.innerHTML = visible.map(([key, theme]) => {
+            const isActive = key === activeKey;
+            return `<button data-theme="${key}"
+                class="theme-swatch ${isActive ? 'theme-swatch--active' : ''} cursor-pointer hover:scale-105"
+                style="background:linear-gradient(135deg,${gradients[key] || '#333,#111'})"
+                title="${theme.name}">
+                <span class="theme-swatch-label">${theme.name}</span>
+                ${isActive ? '<span class="theme-swatch-check">✓</span>' : ''}
+            </button>`;
+        }).join('');
+
+        this.DOM.themeGrid.querySelectorAll('[data-theme]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.pro.applyTheme(btn.dataset.theme);
+                this.buildThemeGrid();
+                this.popDonateBtn(btn.dataset.theme);
+            });
+        });
+    }
+
+    showProSuccess() {
+        this.buildThemeGrid();
+        const toast = document.createElement('div');
+        toast.textContent = '✦ Pro unlocked! Enjoy your themes & export.';
+        toast.style.cssText = `
+            position:fixed; bottom:7rem; left:50%; transform:translateX(-50%);
+            background:#facc15; color:#000; padding:.75rem 1.5rem;
+            border-radius:2rem; font-size:11px; font-weight:800;
+            letter-spacing:.1em; text-transform:uppercase;
+            z-index:9999; white-space:nowrap;
+            animation: toastIn .3s cubic-bezier(.22,1,.36,1) both;
+        `;
+        document.head.insertAdjacentHTML('beforeend',
+            '<style>@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}</style>');
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3500);
+    }
 
     /* ── Letter shuffle ─────────────────────────────────── */
     shuffleText(el, newText) {
@@ -1230,46 +1220,19 @@ buildThemeGrid() {
         }
     }
 
-showToast(msg, color = '#facc15') {
-    const toast = document.createElement('div');
-    toast.textContent = msg;
-    toast.style.cssText = `
-        position: fixed;
-        bottom: 7rem;
-        left: 50%;
-        transform: translateX(-50%) translateY(20px);
-        background: var(--glass-light, rgba(255,255,255,0.55));
-        backdrop-filter: blur(32px);
-        -webkit-backdrop-filter: blur(32px);
-        border: 1px solid rgba(255,255,255,0.7);
-        color: ${color};
-        padding: 0.75rem 1.5rem;
-        border-radius: 2rem;
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        z-index: 9999;
-        white-space: nowrap;
-        font-family: 'Inter', sans-serif;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8);
-        opacity: 0;
-        transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    `;
-    
-    document.body.appendChild(toast);
-    
-    requestAnimationFrame(() => {
-        toast.style.opacity = '1';
-        toast.style.transform = 'translateX(-50%) translateY(0)';
-    });
-    
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(-50%) translateY(20px)';
-        setTimeout(() => toast.remove(), 300);
-    }, 2500);
-}
+    showToast(msg, color = '#facc15') {
+        const toast = document.createElement('div');
+        toast.textContent = msg;
+        toast.style.cssText = `
+            position:fixed;bottom:7rem;left:50%;transform:translateX(-50%);
+            background:${color};color:#000;padding:.75rem 1.5rem;
+            border-radius:2rem;font-size:11px;font-weight:800;
+            letter-spacing:.1em;text-transform:uppercase;
+            z-index:9999;white-space:nowrap;
+            animation:toastIn .3s cubic-bezier(.22,1,.36,1) both;`;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
 
     /* ── Study Room ─────────────────────────────────────── */
     renderRoom(users) {

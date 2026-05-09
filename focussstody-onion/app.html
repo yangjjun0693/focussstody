@@ -243,36 +243,7 @@
 <div id="boot-loader">
     <div class="boot-logo">Focussstody</div>
     <div class="boot-spinner"></div>
-    <p class="boot-tip" id="bootTip"></p>
 </div>
-<script>
-(function() {
-    const tips = [
-        "Every second counts. 🧠",
-        "Space bar to start / pause.",
-        "Streaks reset if you miss a day — don't break the chain.",
-        "Pomodoro mode auto-switches focus & break.",
-        "Add session notes after each study block.",
-        "Themes are free — only in Tor.",
-        "Your data never leaves this device.",
-        "Grand Master requires 24 hours of total study time.",
-        "No ads. No tracking. Just focus.",
-        "Daily challenges reset every midnight.",
-        "Earn $STUDY tokens for every second you study.",
-    ];
-    const el = document.getElementById('bootTip');
-    if (!el) return;
-    let i = Math.floor(Math.random() * tips.length);
-    el.textContent = tips[i];
-    setInterval(() => {
-        i = (i + 1) % tips.length;
-        el.style.animation = 'none';
-        void el.offsetWidth;
-        el.style.animation = 'tipFade 0.5s ease';
-        el.textContent = tips[i];
-    }, 2000);
-})();
-</script>
 
     <main class="glass-card max-w-md w-full p-8 relative z-10 text-center mb-5" style="overflow:visible;background:rgba(255,255,255,0.6);border:1px solid rgba(255,255,255,0.8);box-shadow:0 24px 64px rgba(124,120,184,0.1),inset 0 1px 0 rgba(255,255,255,1);">
         <header class="flex justify-between items-center mb-6">

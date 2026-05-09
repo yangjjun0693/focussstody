@@ -6,13 +6,6 @@
 *::-webkit-scrollbar {
     display: none;
 }
-/* Dark mode glass toast */
-html.dark .toast-glass,
-body[data-focus-state="active"] .toast-glass {
-    background: rgba(30,28,40,0.85) !important;
-    border-color: rgba(255,255,255,0.12) !important;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05) !important;
-}
 /* @file: style.css */
 /* Focussstody — polished UI, consistent theming, no hacks */
 
