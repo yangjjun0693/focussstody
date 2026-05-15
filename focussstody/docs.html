@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docs — Focussstody</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Manrope:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+    (function() {
+        const ACCENTS = { default:'#6964c6',midnight:'#60a5fa',forest:'#4ade80',sunset:'#f97316',ocean:'#22d3ee',mono:'#a3a3a3',cherry:'#fb7185',galaxy:'#a78bfa',gold:'#fbbf24' };
+        const key = localStorage.getItem('fv_theme') || 'default';
+        const accent = ACCENTS[key] || '#6964c6';
+        document.documentElement.style.setProperty('--accent', accent);
+        if (localStorage.getItem('darkMode') === 'true') document.documentElement.classList.add('dark');
+    })();
+    </script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        *:focus, *:focus-visible { outline: none !important; box-shadow: none !important; }
+        * { scrollbar-width: none; -ms-overflow-style: none; }
+        *::-webkit-scrollbar { display: none; }
+
+        :root {
+            --bg: #f0ede8;
+            --ink: #2a2520;
+            --ink2: #7a7268;
+            --accent: #7c78b8;
+            --glass: rgba(255,255,255,0.4);
+            --border: rgba(255,255,255,0.5);
+            --code-bg: rgba(0,0,0,0.05);
+        }
+        html.dark {
+            --bg: #1a1917;
+            --ink: #e8e4dc;
+            --ink2: #7a7570;
+            --glass: rgba(255,255,255,0.04);
+            --border: rgba(255,255,255,0.07);
+            --code-bg: rgba(255,255,255,0.06);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'Manrope', sans-serif;
+            min-height: 100vh;
+            transition: background 0.3s;
+        }
+
+        /*  Blobs  */
+        .blob {
+            position: fixed; border-radius: 50%;
+            filter: blur(80px); pointer-events: none; z-index: 0;
+        }
+        .blob-1 { width:500px;height:500px;background:rgba(124,120,184,0.12);top:-100px;right:-100px; }
+        .blob-2 { width:400px;height:400px;background:rgba(124,120,184,0.08);bottom:5%;left:-80px; }
+
+        /*  Layout  */
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 6rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /*  Nav  */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 3rem;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 9999px;
+            position: sticky;
+            top: 1rem;
+            z-index: 100;
+        }
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem; font-weight: 900; letter-spacing: -0.02em;
+            color: var(--ink); text-decoration: none;
+        }
+        .nav-back {
+            font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
+            text-transform: uppercase; color: var(--ink2);
+            text-decoration: none; opacity: 0.6; transition: opacity 0.2s;
+        }
+        .nav-back:hover { opacity: 1; }
+
+        /*  Header  */
+        .page-label {
+            font-size: 10px; font-weight: 800; letter-spacing: 0.25em;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900; letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            font-size: 13px; color: var(--ink2); margin-bottom: 2.5rem;
+            font-weight: 500; line-height: 1.6;
+        }
+
+        /*  Tab switcher  */
+        .tab-track {
+            display: inline-flex;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 2.5rem;
+            position: relative;
+            gap: 2px;
+        }
+        .tab-pill {
+            position: absolute;
+            top: 4px; bottom: 4px;
+            border-radius: 8px;
+            background: var(--accent);
+            opacity: 0.15;
+            transition: left 0.32s cubic-bezier(0.34,1.45,0.64,1), width 0.32s cubic-bezier(0.34,1.45,0.64,1);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .tab-btn {
+            position: relative; z-index: 1;
+            padding: 0.55rem 1.25rem;
+            border-radius: 8px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: 'Manrope', sans-serif;
+            font-size: 11px; font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink);
+            opacity: 0.4;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+        }
+        .tab-btn.active { opacity: 1; }
+
+        /*  Content panels  */
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /*  Section header  */
+        .section-label {
+            font-size: 9px; font-weight: 800; letter-spacing: 0.25em;
+            text-transform: uppercase; opacity: 0.4;
+            margin: 2.5rem 0 0.75rem 0.25rem;
+        }
+        .section-label:first-child { margin-top: 0; }
+
+        /*  Doc cards  */
+        .doc-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 0.75rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .doc-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+
+        .doc-card h2 {
+            font-size: 13px; font-weight: 800;
+            margin-bottom: 0.75rem;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .doc-card h2 .icon {
+            width: 24px; height: 24px;
+            background: var(--accent);
+            opacity: 0.2;
+            border-radius: 6px;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+        .doc-card p, .doc-card li {
+            font-size: 13px; line-height: 1.75;
+            color: var(--ink2); font-weight: 500;
+            margin-bottom: 0.4rem;
+        }
+        .doc-card ul { padding-left: 1.25rem; }
+        .doc-card li { list-style: disc; }
+        .doc-card li::marker { color: var(--accent); opacity: 0.6; }
+
+        /*  Steps  */
+        .steps { list-style: none; padding: 0; counter-reset: steps; }
+        .steps li {
+            counter-increment: steps;
+            display: flex; gap: 0.75rem; align-items: flex-start;
+            font-size: 13px; line-height: 1.7;
+            color: var(--ink2); font-weight: 500;
+            margin-bottom: 0.6rem;
+        }
+        .steps li::before {
+            content: counter(steps);
+            min-width: 22px; height: 22px;
+            background: var(--accent);
+            opacity: 0.85;
+            color: white;
+            font-size: 10px; font-weight: 900;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        /*  Code blocks  */
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            margin: 0.75rem 0 0.25rem;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            line-height: 1.7;
+            color: var(--ink);
+            opacity: 0.85;
+        }
+        p code, li code {
+            background: var(--code-bg);
+            border-radius: 4px;
+            padding: 1px 5px;
+            font-size: 11px;
+        }
+
+        /*  Badge chips  */
+        .chip {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            font-size: 9px; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            background: var(--accent);
+            color: white;
+            opacity: 0.75;
+            margin-right: 4px;
+        }
+        .chip.green { background: #4ade80; }
+        .chip.yellow { background: #fbbf24; }
+        .chip.red { background: #fb7185; }
+
+        /*  Two-column grid for ranks/themes  */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        @media (max-width: 480px) { .grid-2 { grid-template-columns: 1fr; } }
+        .grid-item {
+            background: var(--code-bg);
+            border-radius: 0.75rem;
+            padding: 0.6rem 0.9rem;
+            font-size: 12px; font-weight: 700;
+            color: var(--ink2);
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .grid-item .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /*  Divider  */
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 1rem 0;
+        }
+
+        /*  File tree  */
+        .file-tree {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px; line-height: 1.9;
+            color: var(--ink2);
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            margin-top: 0.5rem;
+        }
+        .file-tree .dir { color: var(--accent); font-weight: 700; opacity: 0.9; }
+        .file-tree .comment { opacity: 0.4; }
+
+        /*  Footer  */
+        footer {
+            margin-top: 4rem;
+            display: flex; flex-direction: column;
+            align-items: center; gap: 1.25rem;
+        }
+        .footer-nav { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+        .footer-row { display: flex; justify-content: center; gap: 1.5rem; }
+        .f-link {
+            font-size: 9px; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 0.15em;
+            color: var(--ink); text-decoration: none;
+            opacity: 0.3; transition: opacity 0.2s;
+        }
+        .f-link:hover { opacity: 0.7; }
+        .copyright {
+            font-size: 8px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.2em; opacity: 0.2;
+        }
+    </style>
+</head>
+<body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="container">
+        <nav>
+            <a href="./index.html" class="nav-logo">Focussstody</a>
+            <a href="./index.html" class="nav-back">← Back</a>
+        </nav>
+
+        <p class="page-label">Documentation</p>
+        <h1>Docs</h1>
+        <p class="subtitle">Everything you need — whether you're studying or building on top of Focussstody.</p>
+
+        <!-- Tab switcher -->
+        <div class="tab-track" id="tabTrack">
+            <div class="tab-pill" id="tabPill"></div>
+            <button class="tab-btn active" data-tab="user"> User Guide</button>
+            <button class="tab-btn" data-tab="dev"> Developer</button>
+        </div>
+
+        <!-- 
+             USER GUIDE PANEL
+         -->
+        <div class="tab-panel active" id="panel-user">
+
+            <p class="section-label">Getting Started</p>
+
+            <div class="doc-card">
+                <h2> What is Focussstody?</h2>
+                <p>Focussstody is a free study & focus timer. Every second you study earns you <strong>XP</strong> and <strong>$STUDY tokens</strong>, helps you climb the leaderboard, and builds your streak. There's also a live study room where you can see other people studying in real time.</p>
+            </div>
+
+            <div class="doc-card">
+                <h2> Creating an Account</h2>
+                <ol class="steps">
+                    <li>Go to the <a href="./login.html" style="color:var(--accent)">login page</a> and click <strong>Sign Up</strong>.</li>
+                    <li>Enter a username, email address, and password. No phone number required.</li>
+                    <li>Hit <strong>Create Account</strong>. You'll be taken straight to the app.</li>
+                </ol>
+                <hr class="divider">
+                <p style="font-size:12px;opacity:0.6;">Tip: Your username is public — it shows on the leaderboard and in the live study room.</p>
+            </div>
+
+            <p class="section-label">The Timer</p>
+
+            <div class="doc-card">
+                <h2> Starting a Session</h2>
+                <ol class="steps">
+                    <li>Pick a subject from the dropdown (or add a custom one via <strong>+ Add</strong>).</li>
+                    <li>Press <strong>START FOCUS</strong> — or hit <strong>Space</strong> on your keyboard.</li>
+                    <li>The timer counts up. Every second adds 1 XP and 0.016 $STUDY tokens.</li>
+                    <li>Press <strong>PAUSE</strong> (or Space) to stop. You'll be prompted to add a session note.</li>
+                </ol>
+            </div>
+
+            <div class="doc-card">
+                <h2> Pomodoro Mode</h2>
+                <p>Tap the <strong>Pomodoro</strong> toggle to enable automatic focus/break cycles.</p>
+                <ul>
+                    <li>Default: 25 min focus · 5 min break</li>
+                    <li>Customise both durations in the settings that appear below the toggle.</li>
+                    <li>A two-tone audio ping plays when a phase switches.</li>
+                    <li>Pomodoro mode works alongside the regular timer — XP keeps accumulating.</li>
+                </ul>
+            </div>
+
+            <div class="doc-card">
+                <h2> Daily Goals</h2>
+                <p>Each subject has a daily goal (default: 4 hours). A progress bar shows how far you are.</p>
+                <ul>
+                    <li>Tap <strong>Edit Goal</strong> to change it for the selected subject.</li>
+                    <li>Goals are stored per-subject, so Coding and Math can have different targets.</li>
+                </ul>
+            </div>
+
+            <p class="section-label">XP, Tokens & Ranks</p>
+
+            <div class="doc-card">
+                <h2> XP & $STUDY Tokens</h2>
+                <p>Every second you study adds <strong>1 XP</strong>. Tokens are calculated as <code>XP × 0.016</code>.</p>
+                <p>$STUDY tokens are in-app currency only — not real money. Spend them in the Store on themes, badges, and sound packs.</p>
+            </div>
+
+            <div class="doc-card">
+                <h2> Ranks</h2>
+                <p>Your rank is based on total XP (= total seconds studied).</p>
+                <div class="grid-2">
+                    <div class="grid-item"><span class="dot" style="background:#a3a3a3"></span>Apprentice — 0 XP</div>
+                    <div class="grid-item"><span class="dot" style="background:#60a5fa"></span>Scholar — 3,600 XP (1h)</div>
+                    <div class="grid-item"><span class="dot" style="background:#4ade80"></span>Analyst — 10,800 XP (3h)</div>
+                    <div class="grid-item"><span class="dot" style="background:#f97316"></span>Researcher — 36,000 XP (10h)</div>
+                    <div class="grid-item" style="grid-column:1/-1"><span class="dot" style="background:#fbbf24"></span>Grand Master — 86,400 XP (24h)</div>
+                </div>
+            </div>
+
+            <div class="doc-card">
+                <h2> Streaks</h2>
+                <p>Study at least once every calendar day to maintain your streak. Skipping a day resets it to 1. The streak counter is shown at the top of the app.</p>
+            </div>
+
+            <p class="section-label">Daily Challenges</p>
+
+            <div class="doc-card">
+                <h2> How Challenges Work</h2>
+                <p>A new challenge is available every day. Complete the goal and tap <strong>Claim</strong> to earn bonus $STUDY tokens.</p>
+                <ul>
+                    <li><strong>study_time</strong> — study for X minutes today</li>
+                    <li><strong>sessions</strong> — complete X study sessions today</li>
+                    <li><strong>streak</strong> — reach a streak of X days</li>
+                </ul>
+                <p>You can only claim each challenge once. Progress updates live while the timer runs.</p>
+            </div>
+
+            <p class="section-label">Store & Themes</p>
+
+            <div class="doc-card">
+                <h2> Buying Items</h2>
+                <p>Open the <strong>Store</strong> from the nav. Spend $STUDY tokens on:</p>
+                <div class="grid-2">
+                    <div class="grid-item"> Themes</div>
+                    <div class="grid-item"> Badges / Titles</div>
+                </div>
+                <hr class="divider">
+                <p>Purchased themes appear in the Theme grid on the main page. Click any owned theme to apply it instantly.</p>
+            </div>
+
+            <div class="doc-card">
+                <h2> Available Themes</h2>
+                <div class="grid-2">
+                    <div class="grid-item"><span class="dot" style="background:#6964c6"></span>Indigo (free)</div>
+                    <div class="grid-item"><span class="dot" style="background:#818cf8"></span>Midnight — 20 $STUDY</div>
+                    <div class="grid-item"><span class="dot" style="background:#4ade80"></span>Forest — 50 $STUDY</div>
+                    <div class="grid-item"><span class="dot" style="background:#f97316"></span>Sunset — 75 $STUDY</div>
+                    <div class="grid-item"><span class="dot" style="background:#22d3ee"></span>Ocean — 75 $STUDY</div>
+                    <div class="grid-item"><span class="dot" style="background:#a3a3a3"></span>Mono — 100 $STUDY</div>
+                    <div class="grid-item"><span class="dot" style="background:#fb7185"></span>Cherry — 150 $STUDY</div>
+                    <div class="grid-item"><span class="dot" style="background:#a78bfa"></span>Galaxy — 200 $STUDY</div>
+                    <div class="grid-item" style="grid-column:1/-1"><span class="dot" style="background:#fbbf24"></span>Gold — 300 $STUDY</div>
+                </div>
+            </div>
+
+            <p class="section-label">Pro</p>
+
+            <div class="doc-card">
+                <h2> What is Pro?</h2>
+                <p>Pro is a one-time donation upgrade. Pro perks:</p>
+                <ul>
+                    <li>All themes available for free (no token cost)</li>
+                    <li>All badges available for free</li>
+                    <li>CSV export of your study history</li>
+                </ul>
+                <hr class="divider">
+                <p><strong>How to get Pro:</strong> Tap the <strong>₿ Donate</strong> button, send any amount via crypto, then DM <strong>@focussstody_official</strong> on Instagram. We'll send you an unlock code.</p>
+            </div>
+
+            <p class="section-label">Live Study Room</p>
+
+            <div class="doc-card">
+                <h2> Studying Together</h2>
+                <p>While your timer is running, you automatically appear in the live study room. You can see other people's usernames, subjects, and how long they've been studying.</p>
+                <ul>
+                    <li>Presence is powered by Supabase Realtime.</li>
+                    <li>You're removed from the room as soon as you pause or close the tab.</li>
+                    <li>No chat, no DMs — just shared presence.</li>
+                </ul>
+            </div>
+
+            <p class="section-label">Privacy & Data</p>
+
+            <div class="doc-card">
+                <h2> Your Data</h2>
+                <p>All study data (sessions, XP, streak, notes) is synced to Supabase. We never sell or advertise with your data. Full details in the <a href="./privacy.html" style="color:var(--accent)">Privacy Policy</a>.</p>
+            </div>
+            
+            <div class="doc-card">
+                <h2> Tor Mirror</h2>
+                <p>You can access Focussstody over Tor at <code>lqp6oerxidpewa7zxpkqqo6pa3pqwurm24vgyspvry32exrhooqxgiyd.onion</code>. The .onion site provides the same ui, timer as the clearnet version.</p>
+            <hr class="divider">
+                <p>In our mirror, all your data remains only in your device. No sync, no tracker, no auth. Just stay real anonymous.</p>
+                <p>To use the .onion, simply open it in a Tor browser. Your progress will be saved locally in that browser's storage. You can switch back to the clearnet version anytime to sync your data with an account.</p>
+            <hr class="divider">
+                <p style="font-size:12px;opacity:0.6;">Note: In the Tor mirror, all themes are free and we provide an exclusive theme for .onion users.</p>
+            </div>
+        </div><!-- /panel-user -->
+
+
+        <!-- 
+             DEVELOPER PANEL
+         -->
+        <div class="tab-panel" id="panel-dev">
+
+            <p class="section-label">Overview</p>
+
+            <div class="doc-card">
+                <h2> Architecture</h2>
+                <p>Focussstody is a <strong>vanilla JS ES-module app</strong> — no bundler, no framework. Pages are plain HTML files that import JS modules directly. Backend is entirely <strong>Supabase</strong> (Postgres + Auth + Realtime).</p>
+                <div class="file-tree">
+<span class="dir">focussstody/</span>
+ index.html          <span class="comment"># Landing / marketing</span>
+ app.html            <span class="comment"># Main timer app (auth-gated)</span>
+ login.html          <span class="comment"># Sign-up / sign-in</span>
+ stats.html          <span class="comment"># Personal stats page</span>
+ leaderboard.html    <span class="comment"># Global leaderboard</span>
+ friends.html        <span class="comment"># Friends system</span>
+ store.html          <span class="comment"># $STUDY token store</span>
+ faq.html
+ privacy.html
+ docs.html
+ style.css           <span class="comment"># Global Tailwind-like utilities</span>
+ sw.js               <span class="comment"># Service worker (PWA)</span>
+ manifest.json
+ <span class="dir">js/</span>
+     app.js           <span class="comment"># AppController — main orchestrator</span>
+     timer.js         <span class="comment"># StudyTimer class</span>
+     supabase.js      <span class="comment"># DB client + all queries</span>
+     authcheck.js     <span class="comment"># requireAuth() helper</span>
+     pro.js           <span class="comment"># ProManager + THEMES registry</span>
+     store.js         <span class="comment"># StoreManager + catalog</span>
+     room.js          <span class="comment"># StudyRoom (Realtime presence)</span>
+     challenges.js    <span class="comment"># ChallengeManager</span>
+     pomodoro.js      <span class="comment"># PomodoroManager</span>
+     sliding-tabs.js  <span class="comment"># Reusable tab component</span>
+                </div>
+            </div>
+
+            <p class="section-label">Supabase Schema</p>
+
+            <div class="doc-card">
+                <h2> Tables</h2>
+
+                <p style="margin-bottom:0.5rem;font-weight:700;font-size:12px;">profiles</p>
+                <pre><code>id          uuid  PK  (= auth.users.id)
+username    text  UNIQUE
+email       text
+is_pro      bool  DEFAULT false</code></pre>
+
+                <p style="margin:1rem 0 0.5rem;font-weight:700;font-size:12px;">study_data</p>
+                <pre><code>user_id         uuid  FK → profiles.id
+sessions        jsonb   -- { "CODING": 3600, "MATH": 1800 }
+total_exp       int
+weekly_log      jsonb   -- { "2026-05-01": 3600 }
+streak          int
+last_study_date date
+goal_hours      jsonb   -- { "CODING": 4 }
+notes           jsonb   -- [{ date, subject, text, duration }]
+store_items     jsonb   -- ["midnight", "galaxy_brain"]
+active_theme    text
+updated_at      timestamptz</code></pre>
+
+                <p style="margin:1rem 0 0.5rem;font-weight:700;font-size:12px;">daily_challenges</p>
+                <pre><code>id      uuid  PK
+date    date  UNIQUE
+type    text  -- 'study_time' | 'sessions' | 'streak'
+target  int
+reward  int   -- XP bonus</code></pre>
+
+                <p style="margin:1rem 0 0.5rem;font-weight:700;font-size:12px;">challenge_completions</p>
+                <pre><code>user_id       uuid  FK → profiles.id
+challenge_id  uuid  FK → daily_challenges.id
+PRIMARY KEY (user_id, challenge_id)</code></pre>
+            </div>
+
+            <p class="section-label">Core Modules</p>
+
+            <div class="doc-card">
+                <h2> StudyTimer <code style="font-size:10px;opacity:0.6">timer.js</code></h2>
+                <p>Pure timing logic — no DOM. Receives callbacks, returns data.</p>
+                <pre><code>const timer = new StudyTimer(
+    (data) => render(data),   // onTick — fires every second
+    (payload) => save(payload) // onSave — fires on pause/note/reset
+);
+
+timer.loadFromDB(row);        // hydrate from Supabase row
+timer.start('CODING');        // begin session
+timer.pause();                // stop + save delta
+timer.addNote(subject, text, duration);
+timer.reset();                // wipe all data
+
+timer.getStats();             // → { sessions, total_exp, rank, weeklyData, … }
+timer.getRank(exp);           // → { name, level, next, prev }
+timer.getGoal(subject);       // → number (hours)
+timer.setGoal(subject, hours);</code></pre>
+                <p style="margin-top:0.75rem">The <code>onTick</code> callback receives <code>{ formatted, raw, rawTotalExp, progress, rank }</code> every second. <code>raw</code> is current subject seconds; <code>rawTotalExp</code> is live total (not yet persisted).</p>
+            </div>
+
+            <div class="doc-card">
+                <h2> Authentication <code style="font-size:10px;opacity:0.6">supabase.js · authcheck.js</code></h2>
+                <p>All auth flows live in <code>supabase.js</code>. Multi-page apps use <code>requireAuth()</code> from <code>authcheck.js</code> as a guard at the top of each page script.</p>
+                <pre><code>// supabase.js exports
+signUp(username, email, password)
+signIn(username, password)   // looks up email by username first
+signOut()
+getSession()                  // reads localStorage — no network
+
+// authcheck.js
+import { requireAuth } from './authcheck.js';
+const { supabase, userId, username, profile, studyRow }
+    = await requireAuth();
+// → redirects to login.html if no session</code></pre>
+            </div>
+
+            <div class="doc-card">
+                <h2> ProManager & Themes <code style="font-size:10px;opacity:0.6">pro.js</code></h2>
+                <p>Handles Pro status, theme switching, and CSV export.</p>
+                <pre><code>import { ProManager, THEMES } from './pro.js';
+const pro = new ProManager();
+
+pro.isPro                     // bool
+await pro.unlock(code)        // → true/false
+pro.applyTheme(key, ownedItems) // sets CSS vars on :root
+pro.restoreTheme(ownedItems)  // call on page load
+pro.exportCSV(timerStats, username)</code></pre>
+                <p style="margin-top:0.75rem"><code>THEMES</code> is a plain object keyed by theme ID. Each entry has: <code>accent</code>, <code>accentDim</code>, <code>bgLight</code>, <code>bgFocus</code>, <code>textPrimary</code>, <code>miningFrom</code>, <code>miningTo</code>, <code>free</code>.</p>
+                <p style="margin-top:0.5rem">To add a new theme, add an entry to <code>THEMES</code> in <code>pro.js</code> and a matching gradient in the <code>gradients</code> map inside <code>buildThemeGrid()</code> in <code>app.js</code>.</p>
+            </div>
+
+            <div class="doc-card">
+                <h2> StoreManager <code style="font-size:10px;opacity:0.6">store.js</code></h2>
+                <p>Manages purchases stored in <code>localStorage</code> (keyed per username) and synced to Supabase's <code>store_items</code> column.</p>
+                <pre><code>const store = new StoreManager(username);
+
+store.owns(itemId)             // → bool
+store.buy(id, price, tokens, isPro)
+     // → { ok: true, cost } | { ok: false, reason }
+store.setActiveSound(soundId)
+store.setActiveBadge(badgeId)
+store.playTickSound()          // plays active sound each second</code></pre>
+                <p style="margin-top:0.75rem">To add a catalog item, push to <code>STORE_ITEMS.themes</code>, <code>.badges</code>, or <code>.sounds</code> in <code>store.js</code>. Each item needs <code>{ id, name, price, proFree, emoji }</code> — plus <code>preview</code> (two hex colours) for themes.</p>
+            </div>
+
+            <div class="doc-card">
+                <h2> StudyRoom — Realtime Presence <code style="font-size:10px;opacity:0.6">room.js</code></h2>
+                <p>Uses Supabase Realtime presence channels. Each user tracks <code>{ username, subject, startedAt }</code>.</p>
+                <pre><code>const room = new StudyRoom(username, (users) => render(users));
+
+await room.join();             // subscribe to channel
+await room.startStudying(subject); // track presence
+await room.stopStudying();     // untrack
+await room.leave();            // unsubscribe</code></pre>
+                <p style="margin-top:0.75rem">The <code>onUpdate</code> callback receives an array of <code>{ username, subject, startedAt, isMe }</code> sorted by join time.</p>
+            </div>
+
+            <div class="doc-card">
+                <h2> PomodoroManager <code style="font-size:10px;opacity:0.6">pomodoro.js</code></h2>
+                <p>Self-contained — no Supabase. Settings saved to <code>localStorage</code> under <code>fv_pomodoro</code>.</p>
+                <pre><code>const pomo = new PomodoroManager();
+
+pomo.saveSettings(focusMin, breakMin);
+pomo.start(onTick, onPhaseSwitch);
+// onTick → { formatted, remaining, phase, pomosToday }
+// onPhaseSwitch → 'focus' | 'break'
+
+pomo.pause();
+pomo.stop();
+pomo.isRunning  // bool
+pomo.phase      // 'focus' | 'break'
+pomo.settings   // { focusMin, breakMin }</code></pre>
+            </div>
+
+            <div class="doc-card">
+                <h2> ChallengeManager <code style="font-size:10px;opacity:0.6">challenges.js</code></h2>
+                <pre><code>const cm = new ChallengeManager(userId, (reward) => {
+    // called on successful claim
+});
+
+await cm.load()               // → { challenge, completed }
+cm.getProgress(studyData)     // → 0–1
+cm.isClaimable(studyData)     // → bool
+await cm.claim()              // → bool</code></pre>
+                <p style="margin-top:0.75rem">Challenges are seeded in the <code>daily_challenges</code> table. The manager uses <code>challenge_completions</code> to prevent double-claiming. Token award falls back to a direct <code>UPDATE</code> if the <code>increment_exp</code> RPC isn't available.</p>
+            </div>
+
+            <div class="doc-card">
+                <h2> SlidingTabs <code style="font-size:10px;opacity:0.6">sliding-tabs.js</code></h2>
+                <p>Universal animated pill-tab component. Works on any container with <code>&lt;button&gt;</code> children.</p>
+                <pre><code>import { SlidingTabs } from './sliding-tabs.js';
+
+const tabs = new SlidingTabs(trackEl, (index, btn) => {
+    // called when tab changes
+});
+
+tabs.select(index);   // programmatically switch
+tabs.refresh();       // recalculate pill if layout changes</code></pre>
+            </div>
+
+            <p class="section-label">PWA & Service Worker</p>
+
+            <div class="doc-card">
+                <h2> PWA Setup <code style="font-size:10px;opacity:0.6">sw.js</code></h2>
+                <p>Focussstody is a PWA — installable on mobile and desktop. The service worker caches core assets for offline use via a <strong>cache-first</strong> strategy.</p>
+                <ul>
+                    <li>Cache name: <code>focussstody-v1</code> — bump the version string in <code>sw.js</code> to force a cache refresh on deploy.</li>
+                    <li>The <code>ASSETS</code> array lists files that are pre-cached on install. Add new pages/scripts there.</li>
+                    <li>Dynamic fetches fall through to the network if not cached.</li>
+                </ul>
+            </div>
+
+            <p class="section-label">Theme System CSS Variables</p>
+
+            <div class="doc-card">
+                <h2> CSS Variables Reference</h2>
+                <p>All theme values are written to <code>:root</code> by <code>ProManager.applyTheme()</code>. Use these in any page or component:</p>
+                <pre><code>--accent        /* primary accent colour */
+--accent-dim    /* accent at ~40% opacity */
+--text-primary  /* dark foreground for light backgrounds */
+--bg-light      /* page background colour */
+--bg-focus      /* used in the mining/timer card gradient */
+--dropdown-bg   /* context-aware dropdown background */</code></pre>
+                <p style="margin-top:0.75rem">The global <code>--bg</code>, <code>--ink</code>, <code>--ink2</code>, <code>--glass</code>, <code>--border</code> variables are set in each page's own CSS and flip via the <code>html.dark</code> class. Dark mode state is persisted in <code>localStorage</code> under <code>darkMode</code>.</p>
+            </div>
+
+            <p class="section-label">Contributing & Contact</p>
+
+            <div class="doc-card">
+                <h2> Reporting Bugs / Suggestions</h2>
+                <p>DM <a href="https://www.instagram.com/focussstody/" target="_blank" rel="noopener" style="color:var(--accent)"><strong>@focussstody_official</strong></a> on Instagram. Bugs get fixed fast; good suggestions get built.</p>
+            </div>
+
+        </div><!-- /panel-dev -->
+
+        <footer>
+            <div class="footer-nav">
+                <a href="https://www.instagram.com/focussstody/" target="_blank" rel="noopener" class="f-link">instagram</a>
+                <div class="footer-row">
+                    <a href="faq.html" class="f-link">faq</a>
+                    <a href="privacy.html" class="f-link">privacy</a>
+                    <a href="docs.html" class="f-link">docs</a>
+                </div>
+            </div>
+            <p class="copyright">© 2026 Focussstody · All rights reserved</p>
+        </footer>
+    </div><!-- /container -->
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const track   = document.getElementById('tabTrack');
+        const pill    = document.getElementById('tabPill');
+        const buttons = track.querySelectorAll('.tab-btn');
+
+        function movePill(btn, animate = true) {
+            if (!animate) {
+                pill.style.transition = 'none';
+                requestAnimationFrame(() => {
+                    pill.style.transition = '';
+                });
+            }
+            pill.style.left  = btn.offsetLeft + 'px';
+            pill.style.width = btn.offsetWidth + 'px';
+        }
+
+        // Init pill position
+        requestAnimationFrame(() => movePill(track.querySelector('.tab-btn.active'), false));
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tab = btn.dataset.tab;
+
+                buttons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                movePill(btn);
+
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                document.getElementById('panel-' + tab).classList.add('active');
+            });
+        });
+
+        // Reposition pill on resize
+        window.addEventListener('resize', () => {
+            const active = track.querySelector('.tab-btn.active');
+            if (active) movePill(active, false);
+        });
+    });
+    </script>
+</body>
+</html>
