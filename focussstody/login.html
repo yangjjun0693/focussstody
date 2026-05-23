@@ -422,28 +422,29 @@ function movePill(activeBtn) {
 // Init after layout
 requestAnimationFrame(() => movePill(document.querySelector('.form-tab.active')));
 
-// ── OAuth callback handling ──────────────────────────────────────
-// If the URL has a code or access_token, we're returning from Google OAuth
-const params = new URLSearchParams(window.location.search);
-const hash   = new URLSearchParams(window.location.hash.replace('#', ''));
-const isOAuthReturn = params.has('code') || hash.has('access_token');
+// Supabase가 hash로 access_token을 내려줄 때 자동 파싱하도록 잠깐 대기
+await new Promise(r => setTimeout(r, 100));
 
-if (isOAuthReturn) {
-    // Let Supabase exchange the code, then check for new user
-    const result = await handleOAuthCallback();
-    if (result) {
-        if (result.isNewUser) {
-            // Show username picker
-            showUsernameOverlay(result.session.user.id);
-        } else {
-            // Existing user — go straight to app
-            window.location.replace('./app.html');
-        }
+const session = await getSession();
+
+if (session) {
+    const { data: profile } = await supabase
+        .from('profiles')
+        .select('id, username')
+        .eq('id', session.user.id)
+        .single();
+
+    const isNewUser = !profile?.username;
+
+    if (isNewUser) {
+        showUsernameOverlay(session.user.id);
+    } else {
+        window.location.replace('./app.html');
     }
-} else {
-    // Normal page load — check if already signed in
-    const session = await getSession();
-    if (session) { window.location.replace('./app.html'); }
+} else if (window.location.hash.includes('error')) {
+    // hash에 에러가 있으면 표시
+    const hash = new URLSearchParams(window.location.hash.replace('#', ''));
+    shake(document.getElementById('lf-error'), hash.get('error_description') || 'Sign-in failed');
 }
 
 // ── Tab switching ────────────────────────────────────────────────
