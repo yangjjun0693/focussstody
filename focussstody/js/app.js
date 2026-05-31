@@ -161,7 +161,7 @@ document.addEventListener('visibilitychange', async () => {
                 window.location.replace('./login.html');
             }
         } catch (e) {
-            console.error('Boot error:', e);
+            console.error('error faah:', e);
             window.location.replace('./login.html');
         }
     }
@@ -306,7 +306,7 @@ document.addEventListener('visibilitychange', async () => {
         this.DOM.mReset?.addEventListener('click', () => {
             closeMenu();
             setTimeout(() => {
-                if (!confirm('Reset all data? This cannot be undone.')) return;
+                if (!confirm('bru you real gonna reset all??? so sad, say bye 😭')) return;
                 this.timer.reset();
                 this.DOM.startBtn.textContent = 'START FOCUS';
                 this.DOM.body.setAttribute('data-focus-state', 'inactive');
@@ -430,7 +430,7 @@ document.addEventListener('visibilitychange', async () => {
         this.DOM.startBtn?.addEventListener('click', () => {
             if (this.timer.isRunning) {
                 this.timer.pause();
-                this.DOM.startBtn.textContent = 'START FOCUS';
+                this.DOM.startBtn.textContent = 'FOCUS';
                 this.DOM.body.setAttribute('data-focus-state', 'inactive');
                 this.updateChart();
                 this.room?.stopStudying();
@@ -446,7 +446,7 @@ document.addEventListener('visibilitychange', async () => {
 
         // Reset
         this.DOM.resetBtn?.addEventListener('click', () => {
-            if (!confirm('Reset all data? This cannot be undone.')) return;
+            if (!confirm('-bru you real gonna reset all??? so sad, say bye 😭')) return;
             this.timer.reset();
             this.DOM.startBtn.textContent = 'START FOCUS';
             this.DOM.body.setAttribute('data-focus-state', 'inactive');
@@ -754,19 +754,6 @@ document.addEventListener('visibilitychange', async () => {
         if (this.DOM.cryptoModal) donateObserver.observe(this.DOM.cryptoModal, { attributes: true, attributeFilter: ['class'] });
         window.switchDonateTab = () => {};
 
-        // Toss copy
-        this.DOM.tossCopyBtn?.addEventListener('click', () => {
-            navigator.clipboard.writeText('1908-1210-4055').then(() => {
-                if (this.DOM.tossCopied) {
-                    this.DOM.tossCopied.style.opacity = '1';
-                    setTimeout(() => { this.DOM.tossCopied.style.opacity = '0'; }, 2000);
-                }
-                if (this.DOM.tossCopyBtn) {
-                    this.DOM.tossCopyBtn.textContent = '복사됐어요! ✓';
-                    setTimeout(() => { this.DOM.tossCopyBtn.textContent = '계좌번호 복사'; }, 2000);
-                }
-            });
-        });
         this.DOM.cryptoModal?.addEventListener('click', (e) => {
             if (e.target === this.DOM.cryptoModal) this.DOM.cryptoModal.classList.add('hidden');
         });
@@ -932,7 +919,7 @@ document.addEventListener('visibilitychange', async () => {
         const entries  = Object.entries(sessions).filter(([, sec]) => sec > 0);
         if (!this.DOM.logList) return;
         if (!entries.length && !notes.length) {
-            this.DOM.logList.innerHTML = '<p class="opacity-20 text-[10px] font-bold uppercase">No session data</p>';
+            this.DOM.logList.innerHTML = '<p class="opacity-20 text-[10px] font-bold uppercase">no data bruh 😭</p>';
             return;
         }
 
@@ -1351,7 +1338,7 @@ showToast(msg, color = '#facc15') {
                 <div class="store-item-preview" style="${previewStyle}">${item.emoji}</div>
                 <div class="store-item-info">
                     <p class="store-item-name">${item.name}</p>
-                    <p class="store-item-desc">${item.desc || (isFree ? '✦ Free with Pro' : `${item.price} $STUDY`)}</p>
+                    <p class="store-item-desc">${item.desc || (isFree ? '✦ Free if you promaxx' : `${item.price} $STUDY`)}</p>
                 </div>
                 <button class="store-item-btn ${btnClass}"
                     data-id="${item.id}" data-cat="${cat}" data-price="${cost}"
