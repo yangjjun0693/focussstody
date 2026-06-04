@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — Focussstody</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }
+
+:root {
+    --bg: #f0ede8; --ink: #2a2520; --ink2: #7a7268;
+    --accent: #7c78b8; --glass: rgba(255,255,255,0.5);
+    --border: rgba(255,255,255,0.65);
+}
+html.dark {
+    --bg: #1a1917; --ink: #e8e4dc; --ink2: #7a7570;
+    --glass: rgba(255,255,255,0.04); --border: rgba(255,255,255,0.07);
+}
+
+body {
+    background: var(--bg); color: var(--ink);
+    font-family: 'Manrope', sans-serif;
+    min-height: 100vh; transition: background 0.3s;
+}
+
+.blob {
+    position: fixed; border-radius: 50%;
+    filter: blur(80px); pointer-events: none; z-index: 0;
+}
+.blob-1 { width:500px;height:500px;background:rgba(124,120,184,0.1);top:-100px;right:-100px; }
+.blob-2 { width:400px;height:400px;background:rgba(155,151,232,0.08);bottom:5%;left:-80px; }
+html.dark .blob-1 { background:rgba(80,76,130,0.15); }
+html.dark .blob-2 { background:rgba(60,56,100,0.12); }
+
+.container {
+    max-width: 720px; margin: 0 auto;
+    padding: 2rem 1.5rem 6rem;
+    position: relative; z-index: 1;
+}
+
+nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.75rem 1.25rem; margin-bottom: 3rem;
+    background: var(--glass); backdrop-filter: blur(24px);
+    border: 1px solid var(--border); border-radius: 9999px;
+    position: sticky; top: 1rem; z-index: 100;
+}
+.nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 900; letter-spacing: -0.02em;
+    color: var(--ink); text-decoration: none;
+}
+.nav-back {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink2);
+    text-decoration: none; opacity: 0.6;
+    transition: opacity 0.2s;
+}
+.nav-back:hover { opacity: 1; }
+
+.page-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+}
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900; letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+}
+.updated {
+    font-size: 11px; color: var(--ink2); margin-bottom: 3rem; font-weight: 500;
+}
+
+.section {
+    background: var(--glass); backdrop-filter: blur(28px);
+    border: 1px solid var(--border); border-radius: 1.5rem;
+    padding: 2rem; margin-bottom: 1rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.8);
+}
+html.dark .section {
+    box-shadow: 0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.section h2 {
+    font-size: 14px; font-weight: 800; letter-spacing: 0.05em;
+    text-transform: uppercase; margin-bottom: 1rem;
+    color: var(--accent);
+}
+.section p, .section li {
+    font-size: 13px; line-height: 1.75; color: var(--ink2);
+    font-weight: 500; margin-bottom: 0.5rem;
+}
+.section ul { padding-left: 1.25rem; }
+.section li { margin-bottom: 0.4rem; }
+
+footer {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+}
+.footer-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+.footer-row {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+.f-link {
+    font-size: 9px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink);
+    text-decoration: none;
+    opacity: 0.3;
+    transition: opacity 0.2s;
+}
+.f-link:hover { opacity: 0.7; }
+.copyright {
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.2;
+}
+</style>
+<script>
+(function() {
+    const ACCENTS = { default:'#6964c6',midnight:'#60a5fa',forest:'#4ade80',sunset:'#f97316',ocean:'#22d3ee',mono:'#a3a3a3',cherry:'#fb7185',galaxy:'#a78bfa',gold:'#fbbf24' };
+    const key = localStorage.getItem('fv_theme') || 'default';
+    const accent = ACCENTS[key] || '#6964c6';
+    document.documentElement.style.setProperty('--accent', accent);
+    if (localStorage.getItem('darkMode') === 'true') document.documentElement.classList.add('dark');
+})();
+</script>
+</head>
+<body>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<div class="container">
+    <nav>
+        <a href="./index.html" class="nav-logo">Focussstody</a>
+        <a href="./index.html" class="nav-back">← Back</a>
+    </nav>
+
+    <p class="page-label">Legal</p>
+    <h1>Terms of Service</h1>
+    <p class="updated">Last updated: May 2026</p>
+
+    <div class="section">
+        <h2>Using the App (whatevr)</h2>
+        <p>you can use focussstody if you want. or not. idc. its a timer app bruh. you press start, you study, you maybe earn some fake crypto. simple as that. 😒</p>
+        <p>dont do anythin stupid like tryna hack the leaderboard or inject sql or those things. i mean i probly wont notice but still. dont be that guy. 🥀💔</p>
+    </div>
+
+    <div class="section">
+        <h2>Your Account (kinda)</h2>
+        <p>u sign up with username n email. dont forget ur password cuz i aint runnin a password recovery hotline. just reset it urself or cry abt it. 🤷‍♂️</p>
+        <p>one account per human. dont make 50 accounts to cheat the leaderboard. thats sad behavior. touch grass fr. 🌿🌿🌿</p>
+    </div>
+
+    <div class="section">
+        <h2>$STUDY Tokens (not real money lol)</h2>
+        <p>yeah so $STUDY is not real crypto. u cant withdraw it. u cant trade it. u cant pay rent with it. its just for fun inside the app. spend it on themes n badges n those things bru.</p>
+        <p>if u thought u were gonna get rich from studying... i respect the grind but no. 🥀💔</p>
+        <p><small>if you wanna get rich, just go dropship and do some trade with other <strong>"futer entrepreneurs"</strong>🤑☠️🤑</small></p>
+    </div>
+
+    <div class="section">
+        <h2>Pro Plan (donations basicly)</h2>
+        <p>Pro is a one-time donation. u send crypto, i unlock stuff for u. simple. no subscription, no reccuring payments, no "cancel anytime" bs.</p>
+        <p>if u lose ur account after goin Pro... DM me on instagram n i'll try to help. maybe. if i feel like it. 😒</p>
+    </div>
+
+    <div class="section">
+        <h2>Content & Stuff U Post</h2>
+        <p>u can add notes about ur study sessions. dont write anythin illegal or weird. im 12 n i dont wanna see that shi-. keep it pg or atleast pg-13. 😭</p>
+        <p>im not responsible if ur mom reads ur notes n asks questions. thats on u fam. 🤷‍♂️</p>
+    </div>
+
+    <div class="section">
+        <h2>App Goes Down (it happens)</h2>
+        <p>sometimes supabase has issues. sometimes cloudflare acts up. sometimes my raspberry pi overheats. the app might go down. deal with it. 🥀</p>
+        <p>im not liable for lost study time, lost xp, or ur broken streak. u can always study without the app yk. its called a book. 📚</p>
+    </div>
+
+    <div class="section">
+        <h2>Changes to These Terms</h2>
+        <p>i might update this page someday. or never. who knows. im 12. i have homework. just check back if ur paranoid. iykyk. 😒</p>
+    </div>
+
+    <div class="section">
+        <h2>Termination (aka gettin banned)</h2>
+        <p>if ur toxic, cheat, spam, or just annoy me, i might delete ur account. no refunds on Pro (it was a donation anyway). srry abt that.u can cry about it in my DMs. </p>
+    </div>
+
+    <div class="section">
+        <h2>Disclaimer (the serious part kinda)</h2>
+        <p>the app is provided "as is" (whatevr that means). i dont guarantee it works all the time. i dont guarantee ur data is safe (but i try). i dont guarantee anythin really. u use it at ur own risk. yk how it is.</p>
+        <p>if u get too addicted to studying n forget to touch grass... thats not my fault. go outside. breathe air. 😭</p>
+    </div>
+
+    <div class="section">
+        <h2>Contact (if u really need to)</h2>
+        <p>DM <strong>@focussstody</strong> on ig. plz dm me. i got no friends lol. actually i do. btw just send dm 4 fun lol. </p>
+    </div>
+
+    <div class="section">
+        <h2>Governing Law (idk just pick one)</h2>
+        <p>im in south korea. ur somewhere. if somethin goes wrong, we'll figure it out. or not. lawyers are expensive n im literally 12. or, donate lets just be chill about it. 🤝</p>
+    </div>
+
+    <div class="section">
+        <h2>Final Note (read this one pls)</h2>
+        <p>look. i built this cuz i wanted to study better. if it helps you, cool. if not, thats fine too. dont take this too serious. its just a timer app with sum extra stuff. go dig ur deepest focus. or dont. idc. 🥀💔</p>
+        <p style="margin-top: 0.75rem;"><strong>now go study or somethin. 😒</strong></p>
+    </div>
+
+    <footer>
+        <div class="footer-nav">
+            <a href="https://www.instagram.com/focussstody/" target="_blank" rel="noopener" class="f-link">instagram</a>
+            <div class="footer-row">
+                <a href="faq.html" class="f-link">faq</a>
+                <a href="privacy.html" class="f-link">privacy</a>
+                <a href="terms.html" class="f-link">terms</a>
+                <a href="docs.html" class="f-link">docs</a>
+            </div>
+        </div>
+        <p class="copyright">© 2026 Focussstody · All rights reserved</p>
+    </footer>
+</div>
+
+<script data-cfasync="false" src=""></script>
+</body>
+</html>

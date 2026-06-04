@@ -143,7 +143,7 @@
             max-height: 92vh;
         }
         html.dark #fmSheet {
-            background: rgba(28,26,40,0.88);
+            background: rgba(43, 43, 43, 0.88);
             border-color: rgba(255,255,255,0.08);
             box-shadow: 0 -24px 64px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
         }
@@ -170,9 +170,9 @@
             letter-spacing:0; text-transform:uppercase;
         }
         html.dark .fm-avatar {
-            background: rgba(105,100,198,0.3);
-            border-color: rgba(105,100,198,0.4);
-            color: rgba(185,180,255,0.9);
+            background: rgba(187, 187, 187, 0.3);
+            border-color: rgba(189, 189, 189, 0.4);
+            color: rgba(235, 235, 235, 0.9);
         }
         .fm-uname { font-size:15px; font-weight:700; color:rgba(0,0,0,0.78); letter-spacing:-0.01em; }
         .fm-usub  { font-size:11px; color:rgba(0,0,0,0.32); margin-top:2px; }
@@ -312,7 +312,7 @@
         </header>
 
         <div class="flex items-center justify-between mb-3">
-            <button id="pomodoroToggle" class="text-[9px] font-black uppercase tracking-widest opacity-30 hover:opacity-70 transition-opacity"><span>⏱ Pomodoro</span></button>
+            <button id="pomodoroToggle" class="text-[9px] font-black uppercase tracking-widest opacity-30 hover:opacity-70 transition-opacity"><span>🍅 Pomodoro</span></button>
             <span id="pomodoroPhase" class="text-[9px] font-black uppercase tracking-widest opacity-0 transition-opacity"></span>
         </div>
 
@@ -466,6 +466,7 @@
             <div class="flex justify-center gap-6">
                 <a href="faq.html" class="text-[9px] font-black uppercase tracking-widest opacity-30 hover:opacity-70 transition-opacity">faq</a>
                 <a href="privacy.html" class="text-[9px] font-black uppercase tracking-widest opacity-30 hover:opacity-70 transition-opacity">privacy</a>
+                <a href="terms.html" class="text-[9px] font-black uppercase tracking-widest opacity-30 hover:opacity-70 transition-opacity">terms</a>
                 <a href="docs.html" class="text-[9px] font-black uppercase tracking-widest opacity-30 hover:opacity-70 transition-opacity">docs</a>
             </div>
         </div>
@@ -497,7 +498,7 @@
                     <div id="cryptoCoinTrack" class="flex gap-1 p-1 mb-4 rounded-xl" style="background:rgba(255,255,255,0.08)">
                         <button class="crypto-tab" data-coin="btc" style="flex:1;padding:0.4rem 0;font-size:10px;font-weight:800;letter-spacing:0.1em;font-family:'Inter',sans-serif;color:inherit;">₿ BTC</button>
                         <button class="crypto-tab" data-coin="eth" style="flex:1;padding:0.4rem 0;font-size:10px;font-weight:800;letter-spacing:0.1em;font-family:'Inter',sans-serif;color:inherit;opacity:0.4;">Ξ ETH</button>
-                        <button class="crypto-tab" data-coin="sol" style="flex:1;padding:0.4rem 0;font-size:10px;font-weight:800;letter-spacing:0.1em;font-family:'Inter',sans-serif;color:inherit;opacity:0.4;">◎ SOL my love 😘😘</button>
+                        <button class="crypto-tab" data-coin="sol" style="flex:1;padding:0.4rem 0;font-size:10px;font-weight:800;letter-spacing:0.1em;font-family:'Inter',sans-serif;color:inherit;opacity:0.4;">◎ SOL 😘😘</button>
                     </div>
                     <div id="cryptoAddressBox" class="rounded-2xl p-4 mb-3" style="background:rgba(255,255,255,0.08)">
                         <p class="text-[9px] font-black uppercase tracking-widest opacity-40 mb-2" id="cryptoCoinLabel">Bitcoin (BTC)</p>
@@ -515,15 +516,15 @@
     <div id="notesModal" class="hidden fixed inset-0 z-[9999] flex items-center justify-center p-6" style="background:rgba(100,96,160,0.25);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);">
         <div class="glass-card w-full max-w-sm p-8">
             <p class="text-[10px] font-black tracking-[0.3em] uppercase opacity-40 mb-2">Session's Complete</p>
-            <h2 class="text-xl font-black mb-1" style="letter-spacing:-0.02em">what did you do bruh</h2>
-            <p class="text-[10px] opacity-30 mb-5">this shi- is very optional</p>
+            <h2 class="text-xl font-black mb-1" style="letter-spacing:-0.02em"></h2>What did you learn today?</h2>
+            <p class="text-[10px] opacity-30 mb-5">Optional</p>
             <textarea id="notesInput"
                 class="w-full rounded-2xl p-4 text-[12px] font-medium resize-none outline-none border border-white/10 focus:border-white/30 mb-4"
                 style="background:rgba(255,255,255,0.08);min-height:100px"
-                placeholder="ex. learned how to eject my bullet from my glock bro"></textarea>
+                placeholder="ex. learned that 1 + 1 = 2.000000000030002400001"></textarea>
             <div class="flex gap-3">
-                <button id="notesSaveBtn" class="flex-1 py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all" style="background:var(--accent,#6964c6);color:#fff">Save it!</button>
-                <button id="notesSkipBtn" class="px-5 py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all" style="background:rgba(255,255,255,0.08)">Skippy</button>
+                <button id="notesSaveBtn" class="flex-1 py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all" style="background:var(--accent,#6964c6);color:#fff">Save</button>
+                <button id="notesSkipBtn" class="px-5 py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all" style="background:rgba(255,255,255,0.08)">Skip</button>
             </div>
         </div>
     </div>
@@ -627,19 +628,15 @@
 
             <div class="fm-grid">
                 <button class="fm-tile" id="mNavStats">
-                    <div class="fm-tile-icon" style="background:rgba(105,100,198,0.12);border:1px solid rgba(105,100,198,0.18);">📊</div>
                     <div><div class="fm-tile-label">Stats</div><div class="fm-tile-sub">Session history</div></div>
                 </button>
                 <button class="fm-tile" id="mNavLeaderboard">
-                    <div class="fm-tile-icon" style="background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.18);">🏆</div>
                     <div><div class="fm-tile-label">Leaderboard</div><div class="fm-tile-sub">Global ranking</div></div>
                 </button>
                 <button class="fm-tile" id="mNavFriends">
-                    <div class="fm-tile-icon" style="background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.16);">👥</div>
                     <div><div class="fm-tile-label">Friends</div><div class="fm-tile-sub">Study together</div></div>
                 </button>
                 <button class="fm-tile" id="mNavStore">
-                    <div class="fm-tile-icon" style="background:rgba(251,113,133,0.1);border:1px solid rgba(251,113,133,0.18);">🎨</div>
                     <div><div class="fm-tile-label">Store</div><div class="fm-tile-sub">Themes &amp; more</div></div>
                 </button>
             </div>

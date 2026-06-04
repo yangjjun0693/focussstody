@@ -21,7 +21,7 @@
 
 :root{
   --bg:#f0ede8;
-  --bg2:#e8e4de;
+  --bg2:#e1dee8;
   --ink:#2a2520;
   --ink2:#7a7268;
   --accent:#9185de;
@@ -173,26 +173,21 @@ h1 .line-normal{display:block}
   padding:2rem 1.2rem 1.5rem;
   min-height:580px;display:flex;flex-direction:column;gap:0.75rem;
 }
-html.dark .phone-screen{background:linear-gradient(160deg,#2a2535 0%,#1e1b2e 100%)}
 
 .app-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:0.5rem}
 .app-logo-text{
   font-family:'Playfair Display',serif;
   font-size:11px;font-weight:700;opacity:0.7;color:#1e1b3a;font-style:italic;
 }
-html.dark .app-logo-text{color:#c8c4e8}
-.app-streak{font-size:9px;font-weight:800;color:#f97316}
 
 .app-card{
   background:rgba(255,255,255,0.55);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border:1px solid rgba(255,255,255,0.8);border-radius:18px;padding:1rem;
   box-shadow:0 4px 16px rgba(124,120,184,0.1),inset 0 1px 0 rgba(255,255,255,0.95);
 }
-html.dark .app-card{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.1)}
 
 .timer-card{text-align:center;padding:1.2rem 1rem}
 .timer-rank{font-size:8px;font-weight:900;letter-spacing:0.3em;opacity:0.4;color:#1e1b3a;margin-bottom:0.5rem}
-html.dark .timer-rank{color:#c8c4e8}
 .timer-display{
   font-family:'Playfair Display',serif;
   font-size:2.2rem;font-weight:700;color:#6964c6;letter-spacing:-0.02em;margin-bottom:1rem;font-style:italic;
@@ -207,9 +202,7 @@ html.dark .timer-rank{color:#c8c4e8}
 .token-amount{font-family:'DM Mono',monospace;font-size:1.5rem;font-weight:500;letter-spacing:-0.02em}
 .token-sub{font-size:8px;opacity:0.4;margin-top:0.3rem}
 .room-label{font-size:7px;font-weight:900;letter-spacing:0.2em;opacity:0.4;color:#1e1b3a;margin-bottom:0.5rem}
-html.dark .room-label{color:#c8c4e8}
 .room-user{display:flex;align-items:center;gap:0.5rem;font-size:9px;font-weight:700;color:#1e1b3a}
-html.dark .room-user{color:#c8c4e8}
 .room-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;flex-shrink:0;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
 
@@ -511,7 +504,7 @@ html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,
       <button class="dark-toggle" id="darkToggle" aria-label="Toggle dark mode">
         <span id="darkToggleLabel">go daark!</span>
       </button>
-      <a href="./login.html" class="nav-cta">gogogo</a>
+      <a href="./login.html" class="nav-cta">Login</a>
     </div>
   </nav>
 
@@ -527,8 +520,8 @@ html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,
         </h1>
         <p class="hero-sub">the same same habit tracking focussssss just timer app dude. it works btw do not use google login. 😒.</p>
         <div class="hero-actions">
-          <a href="./login.html" class="btn-primary">go app</a>
-          <a href="#features" class="btn-ghost">just works btw ↓</a>
+          <a href="./login.html" class="btn-primary">sign up</a>
+          <a href="#features" class="btn-ghost">what's the feature ↓</a>
         </div>
       </div>
 
@@ -747,8 +740,10 @@ html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,
       <nav class="footer-links" aria-label="Footer navigation">
         <a href="./faq.html">faq</a>
         <a href="./privacy.html">Privacy</a>
+        <a href="./terms.html">Terms</a>
         <a href="./docs.html">Docs</a>
         <a href="./login.html">App →</a>
+        <a href="https://www.instagram.com/focussstody/">IG</a>
       </nav>
     </div>
   </footer>
