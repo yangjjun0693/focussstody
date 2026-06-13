@@ -35,8 +35,8 @@ html.dark{
   --bg2:#414141;
   --ink:#b8b8b8;
   --ink2:#908e9a;
-  --accent:#777777;
-  --accent2:#737373;
+  --accent:#e8e0d0;
+  --accent2:#d4c9b0;
   --glass:rgba(255,255,255,0.04);
   --border:rgba(255,255,255,0.07);
   --shadow:0 8px 32px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.04);
@@ -467,8 +467,7 @@ html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,
 }
 
 .footer-links a:hover {
-  color: black
-
+  color: var(--ink);
 }
 </style>
 </head>
@@ -750,6 +749,8 @@ html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script>
 // dark mode
 (function(){
@@ -769,23 +770,82 @@ html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,
   document.getElementById('fv-cookie-decline').addEventListener('click',()=>dismiss('declined'));
 })();
 
-// scroll reveal
-const ro=new IntersectionObserver(entries=>entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*60);}),{threshold:.1});
-document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+// ── GSAP ScrollTrigger ──
+gsap.registerPlugin(ScrollTrigger);
 
-// count-up
-const co=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(!entry.isIntersecting)return;
-    entry.target.querySelectorAll('[data-count]').forEach(el=>{
-      const t=+el.dataset.count,dur=1500,s=performance.now();
-      const tick=n=>{const p=Math.min((n-s)/dur,1),e2=1-Math.pow(1-p,3);el.textContent=Math.round(e2*t).toLocaleString();if(p<1)requestAnimationFrame(tick);};
-      requestAnimationFrame(tick);
-    });
-    co.unobserve(entry.target);
+// hero left stagger
+gsap.from('.hero-left > *', {
+  y: 40, opacity: 0, duration: 1,
+  stagger: 0.12, ease: 'power3.out', delay: 0.2
+});
+
+// hero right phone
+gsap.from('.hero-right', {
+  y: 60, opacity: 0, duration: 1.2,
+  ease: 'power3.out', delay: 0.4
+});
+
+// stats pills
+gsap.from('.stat-pill', {
+  scrollTrigger: { trigger: '.stats-row', start: 'top 85%' },
+  y: 30, opacity: 0, duration: 0.7,
+  stagger: 0.1, ease: 'power3.out'
+});
+
+// count-up on stats
+document.querySelectorAll('[data-count]').forEach(el => {
+  const target = +el.dataset.count;
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 85%',
+    once: true,
+    onEnter: () => {
+      gsap.to({ val: 0 }, {
+        val: target, duration: 1.6, ease: 'power2.out',
+        onUpdate() { el.textContent = Math.round(this.targets()[0].val).toLocaleString(); }
+      });
+    }
   });
-},{threshold:.5});
-document.querySelectorAll('.stats-row').forEach(el=>co.observe(el));
+});
+
+// features section
+gsap.from('.features-top', {
+  scrollTrigger: { trigger: '.features-section', start: 'top 80%' },
+  y: 40, opacity: 0, duration: 0.8, ease: 'power3.out'
+});
+
+gsap.from('.feat-tab', {
+  scrollTrigger: { trigger: '.feat-tabs', start: 'top 80%' },
+  x: -30, opacity: 0, duration: 0.6,
+  stagger: 0.08, ease: 'power3.out'
+});
+
+gsap.from('.feat-panel-wrap', {
+  scrollTrigger: { trigger: '.features-body', start: 'top 75%' },
+  x: 30, opacity: 0, duration: 0.8, ease: 'power3.out'
+});
+
+// cta section
+gsap.from('.cta-inner', {
+  scrollTrigger: { trigger: '.cta-section', start: 'top 80%' },
+  y: 50, opacity: 0, duration: 0.9,
+  scale: 0.97, ease: 'power3.out'
+});
+
+// parallax blobs
+gsap.to('.blob-1', {
+  scrollTrigger: { scrub: 1.5 },
+  y: -120, ease: 'none'
+});
+gsap.to('.blob-2', {
+  scrollTrigger: { scrub: 2 },
+  y: 100, ease: 'none'
+});
+
+// remove old reveal class logic (handled by gsap now)
+document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+
+
 
 // live timer
 let secs=0;const timerEl=document.getElementById('liveTimer');
@@ -912,6 +972,7 @@ tabs.forEach(tab=>{
   requestAnimationFrame(tick);
 })();
 
+
 // auto redirect
 (async()=>{
   try{
@@ -922,12 +983,7 @@ tabs.forEach(tab=>{
   }catch(e){}
 })();
 
-const scroll = new LocomotiveScroll({
-    el: document.querySelector('[data-scroll-container]'),
-    smooth: true,
-    multiplier: 0.5, // Lower than 1 makes the scroll slower; higher makes it faster
-    firefoxMultiplier: 3,
-});
+
 </script>
 </body>
 </html>
