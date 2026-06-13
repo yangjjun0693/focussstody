@@ -10,3 +10,10 @@ focussstody/.vscode/launch.json
 focussstody/.vscode/settings.json
 focussstody/focussstody-onion
 SQL-focussstody
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
