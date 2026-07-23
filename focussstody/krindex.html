@@ -3,22 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Focussstody — Mine Your Deepest Focus</title>
-<meta name="description" content="the same same habit tracking focussssss just timer app dude. it works btw do not use google login. 😒😒">
+<title>Focussstody — 너의 가장 깊은 집중을 캐라.</title>
+<meta name="description" content="그냥 그 집중 타이머 앱임 ㅋㅋ 진짜 잘 됨 내가 보장함 😤 근데 구글 로그인은 쓰지마셈. 😒😒">
 <link rel="canonical" href="https://focussstody.com/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://focussstody.com/">
-<meta property="og:title" content="Focussstody — Mine Ur Deepest Focus">
+<meta property="og:title" content="Focussstody — 너의 가장 깊은 집중을 캐라.">
 <meta property="og:image" content="https://i.imgur.com/TMVnm8T.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://i.imgur.com/TMVnm8T.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@300;400;500&family=Asta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 *{scrollbar-width:none;-ms-overflow-style:none}
 *::-webkit-scrollbar{display:none}
-
 :root{
   --bg:#f0ede8;
   --bg2:#e1dee8;
@@ -44,26 +43,23 @@ html.dark{
 html.dark .blob-1{background:rgba(58,58,58,0.15)!important}
 html.dark .blob-2{background:rgba(92,92,92,0.12)!important}
 html.dark .cta-inner{background:#262420}
-
 html{
 	scroll-behavior:smooth
 }
 body{
-  font-family:'Manrope',sans-serif;
+  font-family:'Asta Sans','Manrope',sans-serif;
   background:var(--bg);
   color:var(--ink);
   overflow-x:hidden;
   min-height:100vh;
   transition:background .3s,color .3s;
 }
-
 /* noise */
 body::before{
   content:'';position:fixed;inset:0;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
   pointer-events:none;z-index:0;opacity:0.5;
 }
-
 /* blobs */
 .blob{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0}
 .blob-1{width:500px;height:500px;background:rgba(140,136,192,0.10);top:-100px;right:-100px;animation:drift1 12s ease-in-out infinite}
@@ -71,9 +67,7 @@ body::before{
 .blob-3{width:300px;height:300px;background:rgba(74,70,112,0.10);top:40%;right:10%;animation:drift1 18s ease-in-out infinite reverse}
 @keyframes drift1{0%,100%{transform:translate(0,0)scale(1)}50%{transform:translate(30px,-40px)scale(1.05)}}
 @keyframes drift2{0%,100%{transform:translate(0,0)scale(1)}50%{transform:translate(-20px,30px)scale(0.95)}}
-
 .container{max-width:1100px;margin:0 auto;padding:0 2rem;position:relative;z-index:1}
-
 /* ── NAV ── */
 nav{
   padding:0.6rem 1rem 0.6rem 1.25rem;
@@ -109,17 +103,15 @@ nav{
   transition:transform .2s,box-shadow .2s,background .2s;display:inline-block;
 }
 .nav-cta:hover{background:var(--accent);transform:translateY(-1px) scale(1.04);box-shadow:0 8px 24px rgba(124,120,184,0.35)}
-
 /* ── HERO ── */
 .hero{
   min-height:90vh;display:grid;grid-template-columns:1fr 1fr;
   gap:4rem;align-items:center;padding:4rem 0 2rem;
 }
 .hero-left{animation:fadeUp .8s cubic-bezier(.22,1,.36,1) both}
-
 h1{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(2.8rem,6vw,5rem);font-weight:900;
+  font-family:'Gowun Batang',serif;
+  font-size:clamp(2.8rem,6vw,5rem);font-weight:700;
   line-height:1.05;letter-spacing:-0.03em;margin-bottom:1.5rem;
 }
 h1 .line-italic{
@@ -129,13 +121,11 @@ h1 .line-italic{
   display:block;
 }
 h1 .line-normal{display:block}
-
 .hero-sub{
   font-size:1.05rem;color:var(--ink2);line-height:1.65;
   font-weight:600;margin-bottom:2rem;max-width:420px;
 }
 .hero-actions{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
-
 .btn-primary{
   font-size:12px;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;
   padding:1rem 2rem;border-radius:9999px;border:none;cursor:pointer;
@@ -150,7 +140,6 @@ h1 .line-normal{display:block}
   transition:color .2s,transform .2s;
 }
 .btn-ghost:hover{color:var(--accent);transform:translateY(-2px)}
-
 /* ── PHONE ── */
 .hero-right{
   display:flex;justify-content:center;align-items:center;
@@ -158,7 +147,6 @@ h1 .line-normal{display:block}
 }
 .phone-wrap{position:relative;animation:float 6s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-18px) rotate(1deg)}}
-
 .phone{
   width:300px;background:#000;border-radius:40px;padding:16px;
   box-shadow:0 0 0 1px rgba(33,33,33,0.1),0 40px 80px rgba(30,27,58,0.4),0 20px 40px rgba(23,23,23,0.2);
@@ -175,24 +163,21 @@ h1 .line-normal{display:block}
   padding:2rem 1.2rem 1.5rem;
   min-height:580px;display:flex;flex-direction:column;gap:0.75rem;
 }
-
 .app-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:0.5rem}
 .app-logo-text{
   font-family:'Playfair Display',serif;
   font-size:11px;font-weight:700;opacity:0.7;color:#1e1b3a;font-style:italic;
 }
-
 .app-card{
   background:rgba(255,255,255,0.55);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border:1px solid rgba(255,255,255,0.8);border-radius:18px;padding:1rem;
   box-shadow:0 4px 16px rgba(124,120,184,0.1),inset 0 1px 0 rgba(255,255,255,0.95);
 }
-
 .timer-card{text-align:center;padding:1.2rem 1rem}
 .timer-rank{font-size:8px;font-weight:900;letter-spacing:0.3em;opacity:0.4;color:#1e1b3a;margin-bottom:0.5rem}
 .timer-display{
-  font-family:'Playfair Display',serif;
-  font-size:2.2rem;font-weight:700;color:#6964c6;letter-spacing:-0.02em;margin-bottom:1rem;font-style:italic;
+  font-family:'DM Mono',monospace;
+  font-size:2.2rem;font-weight:500;color:#6964c6;letter-spacing:-0.01em;margin-bottom:1rem;
 }
 .timer-btn{
   background:#6964c6;color:#fff;border:none;border-radius:12px;
@@ -207,14 +192,12 @@ h1 .line-normal{display:block}
 .room-user{display:flex;align-items:center;gap:0.5rem;font-size:9px;font-weight:700;color:#1e1b3a}
 .room-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;flex-shrink:0;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
-
 .phone-glow{
   position:absolute;inset:-40px;
   background:radial-gradient(ellipse at center,rgba(105,100,198,0.25) 0%,transparent 70%);
   pointer-events:none;z-index:-1;animation:glowPulse 4s ease-in-out infinite;
 }
 @keyframes glowPulse{0%,100%{opacity:0.6}50%{opacity:1}}
-
 /* ── STATS ── */
 .stats-row{
   display:flex;gap:1rem;padding:3rem 0;
@@ -237,23 +220,19 @@ html.dark .stat-pill{
   color:var(--accent);line-height:1;margin-bottom:0.3rem;
 }
 .stat-pill-label{font-size:10px;font-weight:700;opacity:0.45;letter-spacing:0.1em;text-transform:uppercase}
-
 /* ── FEATURES — Phantom accordion layout ── */
 .features-section{padding:5rem 0}
-
 .features-top{margin-bottom:3.5rem}
 .features-label{font-size:10px;font-weight:800;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
 .features-title{
-  font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);
-  font-weight:900;letter-spacing:-0.03em;max-width:500px;line-height:1.15;
+  font-family:'Gowun Batang',serif;font-size:clamp(2rem,4vw,3rem);
+  font-weight:700;letter-spacing:-0.02em;max-width:500px;line-height:1.2;
 }
 .features-title em{font-style:italic;color:var(--accent)}
-
 .features-body{
   display:grid;grid-template-columns:1fr 1fr;
   gap:5rem;align-items:start;
 }
-
 /* left accordion */
 .feat-tabs{display:flex;flex-direction:column}
 .feat-tab{
@@ -271,7 +250,7 @@ html.dark .stat-pill{
 }
 .feat-tab-body{flex:1}
 .feat-tab-title{
-  font-family:'Playfair Display',serif;
+  font-family:'Gowun Batang',serif;
   font-size:1.05rem;font-weight:700;
   color:var(--ink2);letter-spacing:-0.01em;
   transition:color .2s;
@@ -290,7 +269,6 @@ html.dark .stat-pill{
 .feat-tab.active .feat-tab-title{color:var(--ink)}
 .feat-tab.active .feat-tab-arrow{transform:rotate(45deg);opacity:0.7}
 .feat-tab.active .feat-tab-desc{max-height:100px;opacity:1;margin-top:0.6rem}
-
 /* right sticky panel */
 .feat-panel-wrap{position:sticky;top:6rem}
 .feat-panel{
@@ -310,15 +288,13 @@ html.dark .stat-pill{
 }
 .feat-panel-inner.active{display:block}
 @keyframes panelFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-
 .fp-icon{font-size:2rem;margin-bottom:1.25rem}
 .fp-title{
-  font-family:'Playfair Display',serif;
-  font-size:1.5rem;font-weight:700;letter-spacing:-0.02em;
+  font-family:'Gowun Batang',serif;
+  font-size:1.5rem;font-weight:700;letter-spacing:-0.01em;
   margin-bottom:0.6rem;color:var(--ink);
 }
 .fp-desc{font-size:0.875rem;line-height:1.7;color:var(--ink2);font-weight:600;margin-bottom:1.5rem}
-
 /* mini mock inside panel */
 .fp-mock{
   background:rgba(255,255,255,0.6);backdrop-filter:blur(16px);
@@ -338,7 +314,6 @@ html.dark .fp-mock{background:rgba(255,255,255,0.06);border-color:rgba(255,255,2
 .fp-row-val.accent{color:var(--accent)}
 .fp-progress-bg{height:4px;background:rgba(105,100,198,0.12);border-radius:999px;overflow:hidden;margin-top:1rem}
 .fp-progress-fill{height:100%;background:var(--accent);border-radius:999px}
-
 .fp-list{display:flex;flex-direction:column;gap:0.4rem;margin-top:0.25rem}
 .fp-list-row{
   display:flex;align-items:center;gap:0.6rem;
@@ -356,10 +331,9 @@ html.dark .fp-list-row{background:rgba(255,255,255,0.05);border-color:rgba(255,2
   width:90px;height:90px;border-radius:50%;
   border:3px solid var(--accent);
   margin:0 auto 1.25rem;
-  font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;font-style:italic;
+  font-family:'DM Mono',monospace;font-size:1.3rem;font-weight:500;
   color:var(--accent);
 }
-
 /* ── CTA ── */
 .cta-section{padding:5rem 0;text-align:center}
 .cta-inner{
@@ -374,8 +348,8 @@ html.dark .fp-list-row{background:rgba(255,255,255,0.05);border-color:rgba(255,2
   pointer-events:none;
 }
 .cta-inner h2{
-  font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.5rem);
-  font-weight:900;letter-spacing:-0.03em;margin-bottom:1rem;
+  font-family:'Gowun Batang',serif;font-size:clamp(2rem,5vw,3.5rem);
+  font-weight:700;letter-spacing:-0.02em;margin-bottom:1rem;
   position:relative;z-index:1;
 }
 .cta-inner p{font-size:1rem;opacity:0.5;margin-bottom:2rem;position:relative;z-index:1}
@@ -388,7 +362,6 @@ html.dark .fp-list-row{background:rgba(255,255,255,0.05);border-color:rgba(255,2
   transition:transform .25s,box-shadow .25s,background .25s,color .25s;
 }
 .cta-btn:hover{background:var(--accent2);color:#fff;box-shadow:0 12px 40px rgba(105,100,198,0.4);transform:translateY(-2px) scale(1.03)}
-
 /* ── FOOTER ── */
 footer{padding:2rem 0;border-top:1px solid rgba(105,100,198,0.1)}
 .footer-inner{
@@ -402,13 +375,10 @@ footer{padding:2rem 0;border-top:1px solid rgba(105,100,198,0.1)}
   text-decoration:none;color:inherit;transition:opacity .2s;
 }
 .footer-links a:hover{opacity:1}
-
 /* ── REVEAL ── */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
 .reveal.visible{opacity:1;transform:none}
-
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
-
 /* ── COOKIE ── */
 #fv-cookie{
   position:fixed;bottom:6rem;left:50%;
@@ -445,9 +415,7 @@ html.dark .cookie-decline{background:rgba(255,255,255,0.09)}
   transition:transform .15s,filter .15s;flex:1;
 }
 .cookie-accept:hover{filter:brightness(1.1);transform:scale(1.03)}
-
 ::selection{background:rgba(180,138,205,0.7);color:#D3D3FF;-webkit-text-fill-color:#d16bc2}
-
 .spotlight{
   position:fixed;pointer-events:none;z-index:0;
   width:500px;height:500px;border-radius:50%;
@@ -456,7 +424,6 @@ html.dark .cookie-decline{background:rgba(255,255,255,0.09)}
   transition:left .15s ease,top .15s ease;
 }
 html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,transparent 70%)}
-
 @media(max-width:768px){
   .hero{grid-template-columns:1fr;gap:2rem;padding:2rem 0;min-height:unset}
   .hero-right{order:-1}
@@ -467,65 +434,55 @@ html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,
   .stats-row{flex-wrap:wrap}
   .footer-inner{flex-direction:column;align-items:flex-start}
 }
-
 .footer-links a:hover {
   color: var(--ink);
 }
 </style>
 </head>
 <body>
-
 <!-- Cookie -->
 <div id="fv-cookie" role="dialog" aria-label="Cookie consent">
   <div class="cookie-inner">
     <p class="cookie-brand">Focussstody</p>
     <p class="cookie-title">We use cookies.</p>
-    <p class="cookie-body">To keep you logged in and save your preferences. No ads, no tracking. <a href="./privacy.html">Privacy policy →</a></p>
+    <p class="cookie-body">로그인 상태 유지하고 설정 기억해줌. 광고 없음, 트래킹 없음, 약속함. <a href="./privacy.html">Privacy policy →</a></p>
     <div class="cookie-actions">
-      <button id="fv-cookie-decline" class="cookie-decline">Decline</button>
-      <button id="fv-cookie-accept" class="cookie-accept">Gotchaaa</button>
+      <button id="fv-cookie-decline" class="cookie-decline">싫엉</button>
+      <button id="fv-cookie-accept" class="cookie-accept">오키오키</button>
     </div>
   </div>
 </div>
-
 <!-- Spotlight -->
 <div class="spotlight" id="spotlight" aria-hidden="true"></div>
-
 <!-- Blobs -->
 <div class="blob blob-1" aria-hidden="true"></div>
 <div class="blob blob-2" aria-hidden="true"></div>
 <div class="blob blob-3" aria-hidden="true"></div>
-
 <div class="container">
-
   <!-- Nav -->
   <nav aria-label="Main navigation">
     <a href="#" class="nav-logo">Focussstody</a>
     <div class="nav-right">
       <button class="dark-toggle" id="darkToggle" aria-label="Toggle dark mode">
-        <span id="darkToggleLabel">go daark!</span>
+        <span id="darkToggleLabel">거멍돼지</span>
       </button>
-      <a href="./login.html" class="nav-cta">Login</a>
+      <a href="./login.html" class="nav-cta">로그인</a>
     </div>
   </nav>
-
   <main>
-
     <!-- HERO -->
     <section class="hero" aria-labelledby="hero-heading">
       <div class="hero-left">
         <h1 id="hero-heading">
-          <span class="line-normal">go dig ur</span>
-          <span class="line-italic">deeeeepest</span>
-          <span class="line-normal">focusss.</span>
+          <span class="line-normal">당신만의</span>
+          <span class="line-normal">집중을</span>
         </h1>
-        <p class="hero-sub">the same same habit tracking focussssss just timer app dude. it works btw do not use google login. 😒.</p>
+        <p class="hero-sub">음ㅁ메 🐐</p>
         <div class="hero-actions">
-          <a href="./login.html" class="btn-primary">sign up</a>
-          <a href="#features" class="btn-ghost">what's the feature ↓</a>
+          <a href="./login.html" class="btn-primary">시작하기</a>
+          <a href="#features" class="btn-ghost">특징💗 ↓</a>
         </div>
       </div>
-
       <div class="hero-right" aria-hidden="true">
         <div class="phone-wrap">
           <div class="phone-glow"></div>
@@ -562,7 +519,6 @@ html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,
         </div>
       </div>
     </section>
-
     <!-- STATS -->
     <div class="stats-row reveal" aria-label="Platform statistics">
       <div class="stat-pill">
@@ -578,78 +534,73 @@ html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,
         <div class="stat-pill-label">미안해 다 구라야 ㅜ</div>
       </div>
     </div>
-
     <!-- FEATURES — Phantom accordion layout -->
     <section class="features-section" id="features" aria-labelledby="features-heading">
-
       <div class="features-top reveal">
         <p class="features-label">당신은 왜 Focussstody를 사용하여야 하는가.</p>
         <h2 class="features-title" id="features-heading">
 			나두 몰름;;
         </h2>
       </div>
-
       <div class="features-body reveal">
-
         <!-- Left: accordion tabs -->
         <div class="feat-tabs">
           <div class="feat-tab active" data-panel="0">
             <span class="feat-tab-num">01</span>
             <div class="feat-tab-body">
-              <div class="feat-tab-title">Mine in app crypto </div>
-              <div class="feat-tab-desc">₿₿₿₿₿₿₿₿₿₿₿₿ spend it in store and those things bru</div>
+              <div class="feat-tab-title">가짜 코인 채굴하깅 </div>
+              <div class="feat-tab-desc">₿₿₿₿₿₿₿₿₿₿₿₿ 스토어에서 아무거나 지르셈 ㅋㅋ</div>
             </div>
             <span class="feat-tab-arrow">+</span>
           </div>
           <div class="feat-tab" data-panel="1">
             <span class="feat-tab-num">02</span>
             <div class="feat-tab-body">
-              <div class="feat-tab-title">See who's studyin </div>
-              <div class="feat-tab-desc">live rooms alive !! see who's studying rn with you. </div>
+              <div class="feat-tab-title">누가 누가 열심히 공부하나? </div>
+              <div class="feat-tab-desc">실시간 공부방 킨다 !! 지금 누가 공부하고 있나 보셈</div>
             </div>
             <span class="feat-tab-arrow">+</span>
           </div>
           <div class="feat-tab" data-panel="2">
             <span class="feat-tab-num">03</span>
             <div class="feat-tab-body">
-              <div class="feat-tab-title">Climb the ranks</div>
-              <div class="feat-tab-desc">go kiddo to ahh master of learning 🎒🎒</div>
+              <div class="feat-tab-title">랭킹 랭킹</div>
+              <div class="feat-tab-desc">열시미 만들어봄.</div>
             </div>
             <span class="feat-tab-arrow">+</span>
           </div>
           <div class="feat-tab" data-panel="3">
             <span class="feat-tab-num">04</span>
             <div class="feat-tab-body">
-              <div class="feat-tab-title">Daily challenges</div>
-              <div class="feat-tab-desc">side quest alive!!</div>
+              <div class="feat-tab-title">일일 퀘스트</div>
+              <div class="feat-tab-desc">공부하그라.</div>
             </div>
             <span class="feat-tab-arrow">+</span>
           </div>
           <div class="feat-tab" data-panel="4">
             <span class="feat-tab-num">05</span>
             <div class="feat-tab-body">
-              <div class="feat-tab-title">Friends & rivalry</div>
-              <div class="feat-tab-desc">Sybau and study more to win friens 🥀🥀💔</div>
+              <div class="feat-tab-title">칭구칭구y</div>
+              <div class="feat-tab-desc">닥공해서 칭구 이겨블자 😭✌️🥀</div>
+              <p><small>암튼 칭구 이기라는 뜻</small></p>
             </div>
             <span class="feat-tab-arrow">+</span>
           </div>
           <div class="feat-tab" data-panel="5">
             <span class="feat-tab-num">06</span>
             <div class="feat-tab-body">
-              <div class="feat-tab-title">Pomodoro built-in</div>
-              <div class="feat-tab-desc">pomodoro means tomato in italiana 🍅🍅 🇮🇹</div>
+              <div class="feat-tab-title">도마도가 되</div>
+              <div class="feat-tab-desc">뽀모도로는 이태리말로 멋쟁이 도마도 🍅</div>
             </div>
             <span class="feat-tab-arrow">+</span>
           </div>
         </div>
-
         <!-- Right: sticky panel -->
         <div class="feat-panel-wrap">
           <div class="feat-panel">
-
             <div class="feat-panel-inner active" data-panel="0">
-              <div class="fp-title">earn while you study hard</div>
-              <div class="fp-desc">you're like a gpu fully working on mining cryptos bruh. how cool</div>
+              <div class="fp-title">공부하면서 돈 버는거임</div>
+              <div class="fp-desc">너 지금 그냥 코인 채굴하는 GPU임 ㅋㅋ 개쩐다 진짜</div>
               <div class="fp-mock">
                 <div class="fp-row"><span class="fp-row-label">Session</span><span class="fp-row-val">47 min</span></div>
                 <div class="fp-row"><span class="fp-row-label">Earned</span><span class="fp-row-val accent">+45.12 $STUDY</span></div>
@@ -657,10 +608,9 @@ html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,
                 <div class="fp-progress-bg"><div class="fp-progress-fill" style="width:65%"></div></div>
               </div>
             </div>
-
             <div class="feat-panel-inner" data-panel="1">
-              <div class="fp-title">study with others real time</div>
-              <div class="fp-desc">see who's studying while you're studyin. makes you feel better on studying. maybe. btw you aint alone.</div>
+              <div class="fp-title">실시간으로 같이 공부하기</div>
+              <div class="fp-desc">너 공부할 때 누가 같이 공부하는지 보임. 뭔가 위로됨. 아마도. 아무튼 혼자 아님 ㅋㅋ</div>
               <div class="fp-mock">
                 <div class="fp-list">
                   <div class="fp-list-row"><div class="fp-gdot"></div><span style="flex:1">alex · calculus · 1h 12m</span></div>
@@ -670,10 +620,9 @@ html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,
                 </div>
               </div>
             </div>
-
             <div class="feat-panel-inner" data-panel="2">
-              <div class="fp-title">rank~~~</div>
-              <div class="fp-desc">4 ranks from Apprentice to Grand Master. may change cuz this aint funny</div>
+              <div class="fp-title">랭킹 야호~~~</div>
+              <div class="fp-desc">오이데~~~ ♥️</div>
               <div class="fp-mock">
                 <div class="fp-list">
                   <div class="fp-list-row"><span style="flex:1">#1 · grand_master · 2,400h</span><span style="color:var(--accent)">GM</span></div>
@@ -683,10 +632,9 @@ html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,
                 </div>
               </div>
             </div>
-
             <div class="feat-panel-inner" data-panel="3">
-              <div class="fp-title">challenges updated daily</div>
-              <div class="fp-desc">get a quest and just go for it. not funny cuz simple. ykyk</div>
+              <div class="fp-title">매일매일 새 퀘스트 진짜임</div>
+              <div class="fp-desc">퀘스트 받으면 그냥 하셈. 별거 없음 ㅋㅋ 알잖음</div>
               <div class="fp-mock">
                 <div class="fp-row"><span class="fp-row-label">Today's target</span><span class="fp-row-val">2 hours</span></div>
                 <div class="fp-row"><span class="fp-row-label">Progress</span><span class="fp-row-val accent">1h 18m / 2h</span></div>
@@ -694,10 +642,9 @@ html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,
                 <div class="fp-progress-bg"><div class="fp-progress-fill" style="width:65%"></div></div>
               </div>
             </div>
-
             <div class="feat-panel-inner" data-panel="4">
-              <div class="fp-title">leaderboard~~~</div>
-              <div class="fp-desc">add friens and compete with em. so difficult.</div>
+              <div class="fp-title">친구 랭킹~~~</div>
+              <div class="fp-desc">칭구 추가해서 발라버려 ㅋㅋ 난 못하지만</div>
               <div class="fp-mock">
                 <div class="fp-list">
                   <div class="fp-list-row"><div class="fp-gdot"></div><span style="flex:1">sara · 88h this week</span><span style="color:var(--accent)">#1</span></div>
@@ -706,10 +653,9 @@ html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,
                 </div>
               </div>
             </div>
-
             <div class="feat-panel-inner" data-panel="5">
-              <div class="fp-title">Pomodoro!!</div>
-              <div class="fp-desc">'pomodoro' means 'tomato' 🍅🍅
+              <div class="fp-title">멋쟁이 도마도</div>
+              <div class="fp-desc">'뽀모도로'는 진짜 그냥 '토마토'라는 뜻임 🍅🍅
               </div>
               <div class="fp-mock" style="text-align:center">
                 <div class="fp-pom">24:13</div>
@@ -717,40 +663,34 @@ html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,
                 <div class="fp-row"><span class="fp-row-label">Today</span><span class="fp-row-val accent">6 pomodoros</span></div>
               </div>
             </div>
-
           </div>
         </div>
-
       </div>
     </section>
-
     <!-- CTA -->
     <section class="cta-section reveal" aria-labelledby="cta-heading">
       <div class="cta-inner">
-        <h2 id="cta-heading">jsut go dig<br>ur focussssss.</h2>
-        <p>why pay? lmao. no ads included fahh</p>
-        <a href="./login.html" class="cta-btn">if you want →</a>
+        <h2 id="cta-heading">헿ㅎ<br>안농</h2>
+        <p>음..</p>
+        <a href="./login.html" class="cta-btn">해보깅 ㅎㅎ</a>
       </div>
     </section>
-
   </main>
-
   <footer>
     <div class="footer-inner">
       <span>© 2026 Focussstody</span>
       <nav class="footer-links" aria-label="Footer navigation">
-        <a href="./faq.html">faq</a>
+        <a href="./faq.html">FAQ</a>
         <a href="./privacy.html">Privacy</a>
         <a href="./terms.html">Terms</a>
         <a href="./docs.html">Docs</a>
         <a href="./login.html">App →</a>
         <a href="https://www.instagram.com/focussstody/">IG</a>
+        <p>짜피 다 영어임 미아냉</p>
       </nav>
     </div>
   </footer>
-
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script>
@@ -761,7 +701,6 @@ html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,
   apply(localStorage.getItem('darkMode')==='true');
   btn.addEventListener('click',()=>{const d=!root.classList.contains('dark');localStorage.setItem('darkMode',d);apply(d);});
 })();
-
 // cookie
 (function(){
   const KEY='fv_cookie_consent',el=document.getElementById('fv-cookie');
@@ -771,29 +710,24 @@ html.dark .spotlight{background:radial-gradient(circle,rgba(140,136,200,0.1) 0%,
   document.getElementById('fv-cookie-accept').addEventListener('click',()=>dismiss('accepted'));
   document.getElementById('fv-cookie-decline').addEventListener('click',()=>dismiss('declined'));
 })();
-
 // ── GSAP ScrollTrigger ──
 gsap.registerPlugin(ScrollTrigger);
-
 // hero left stagger
 gsap.from('.hero-left > *', {
   y: 40, opacity: 0, duration: 1,
   stagger: 0.12, ease: 'power3.out', delay: 0.2
 });
-
 // hero right phone
 gsap.from('.hero-right', {
   y: 60, opacity: 0, duration: 1.2,
   ease: 'power3.out', delay: 0.4
 });
-
 // stats pills
 gsap.from('.stat-pill', {
   scrollTrigger: { trigger: '.stats-row', start: 'top 85%' },
   y: 30, opacity: 0, duration: 0.7,
   stagger: 0.1, ease: 'power3.out'
 });
-
 // count-up on stats
 document.querySelectorAll('[data-count]').forEach(el => {
   const target = +el.dataset.count;
@@ -809,31 +743,26 @@ document.querySelectorAll('[data-count]').forEach(el => {
     }
   });
 });
-
 // features section
 gsap.from('.features-top', {
   scrollTrigger: { trigger: '.features-section', start: 'top 80%' },
   y: 40, opacity: 0, duration: 0.8, ease: 'power3.out'
 });
-
 gsap.from('.feat-tab', {
   scrollTrigger: { trigger: '.feat-tabs', start: 'top 80%' },
   x: -30, opacity: 0, duration: 0.6,
   stagger: 0.08, ease: 'power3.out'
 });
-
 gsap.from('.feat-panel-wrap', {
   scrollTrigger: { trigger: '.features-body', start: 'top 75%' },
   x: 30, opacity: 0, duration: 0.8, ease: 'power3.out'
 });
-
 // cta section
 gsap.from('.cta-inner', {
   scrollTrigger: { trigger: '.cta-section', start: 'top 80%' },
   y: 50, opacity: 0, duration: 0.9,
   scale: 0.97, ease: 'power3.out'
 });
-
 // parallax blobs
 gsap.to('.blob-1', {
   scrollTrigger: { scrub: 1.5 },
@@ -843,16 +772,11 @@ gsap.to('.blob-2', {
   scrollTrigger: { scrub: 2 },
   y: 100, ease: 'none'
 });
-
 // remove old reveal class logic (handled by gsap now)
 document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-
-
-
 // live timer
 let secs=0;const timerEl=document.getElementById('liveTimer');
 setInterval(()=>{secs++;const h=String(Math.floor(secs/3600)).padStart(2,'0'),m=String(Math.floor((secs%3600)/60)).padStart(2,'0'),s=String(secs%60).padStart(2,'0');timerEl.textContent=`${h}:${m}:${s}`;},1000);
-
 // feature accordion + panel
 const tabs=document.querySelectorAll('.feat-tab');
 const panels=document.querySelectorAll('.feat-panel-inner');
@@ -865,19 +789,15 @@ tabs.forEach(tab=>{
     document.querySelector(`.feat-panel-inner[data-panel="${idx}"]`).classList.add('active');
   });
 });
-
 // ── MAGNETIC HERO TITLE + SPOTLIGHT RAF LOOP ──
 (function(){
   const h1=document.getElementById('hero-heading');
   if(!h1)return;
-
   const allChars=[],charStates=[];
   const lines=[
-    {text:'공부',italic:false},
-    {text:'야호~~~',italic:true},
-    {text:'focusss.',italic:false},
+    {text:'당신만의',italic:false},
+    {text:'집중을',italic:false},
   ];
-
   h1.innerHTML='';
   lines.forEach(line=>{
     const lineEl=document.createElement('span');
@@ -896,7 +816,6 @@ tabs.forEach(tab=>{
     });
     h1.appendChild(lineEl);
   });
-
   let charPositions=[];
   function cachePositions(){
     charPositions=allChars.map(ch=>{
@@ -906,7 +825,6 @@ tabs.forEach(tab=>{
   }
   setTimeout(cachePositions,200);
   window.addEventListener('resize',cachePositions);
-
   // magnetic buttons
   document.querySelectorAll('.btn-primary,.btn-ghost,.nav-cta,.cta-btn').forEach(btn=>{
     btn.addEventListener('mousemove',e=>{
@@ -917,7 +835,6 @@ tabs.forEach(tab=>{
     });
     btn.addEventListener('mouseleave',()=>{btn.style.transform='';});
   });
-
   // card tilt
   document.querySelectorAll('.feat-panel,.stat-pill').forEach(card=>{
     card.addEventListener('mousemove',e=>{
@@ -932,17 +849,14 @@ tabs.forEach(tab=>{
       card.style.transition='transform .5s cubic-bezier(.34,1.45,.64,1)';
     });
   });
-
   // RAF loop
   const spotlight=document.getElementById('spotlight');
   const MAGNET_R=130,STRENGTH=0.45,SPRING=0.055,DAMP=0.82;
   let mouseX=0,mouseY=0,mouseMoved=false,anyMoving=false;
-
   document.addEventListener('mousemove',e=>{
     mouseX=e.clientX;mouseY=e.clientY;mouseMoved=true;
     if(spotlight){spotlight.style.left=mouseX+'px';spotlight.style.top=mouseY+'px';}
   });
-
   function tick(){
     if(mouseMoved||anyMoving){
       mouseMoved=false;anyMoving=false;
@@ -973,8 +887,6 @@ tabs.forEach(tab=>{
   }
   requestAnimationFrame(tick);
 })();
-
-
 // auto redirect
 (async()=>{
   try{
@@ -984,15 +896,6 @@ tabs.forEach(tab=>{
     if(session)window.location.replace('./app.html');
   }catch(e){}
 })();
-
-// Korean Redirect
-const userLanguage = navigator.language || navigator.userLanguage;
-
-if (userLanguage.startsWith('ko')) {
-	if (!window.location.pathname.endsWith('krindex.html')){
-		window.location.href = './krindex.html';
-	}
-}
 </script>
 </body>
 </html>
